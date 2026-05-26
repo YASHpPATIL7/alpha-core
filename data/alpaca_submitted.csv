@@ -1,0 +1,2 @@
+nse_ticker,etf_proxy,gated_pct,sentiment,multiplier,xgb_signal,xgb_ic,action,qty,side,notional_usd,status,order_id
+SUNPHARMA,XLV,3.254,neutral,0.7,LONG_BIAS,0.0185,LONG,23,buy,3220,SUBMITTED,d3aaf07f-7065-4528-8ffb-9794d3dea1e3
