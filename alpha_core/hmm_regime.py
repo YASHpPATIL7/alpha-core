@@ -611,7 +611,18 @@ def detect_current_regime() -> str:
     if label_path.exists():
         df = pd.read_csv(label_path, index_col=0, parse_dates=True)
         regime = df["regime_name"].iloc[-1]
-        logger.info("Current regime (from cache): %s", regime)
+        # Fix 2026-05-27: staleness check — warn if last label is > 3 calendar days old.
+        # Without this, a 2-week-old Bear signal trades as if current. Silent and dangerous.
+        last_date = df.index[-1]
+        days_stale = (pd.Timestamp.today().normalize() - last_date).days
+        if days_stale > 3:
+            logger.warning(
+                "⚠ STALE REGIME: last label is %d days old (date: %s, regime: %s). "
+                "Re-run hmm_regime.py to refresh. Trading on stale signal.",
+                days_stale, last_date.date(), regime
+            )
+        else:
+            logger.info("Current regime (from cache, %d days old): %s", days_stale, regime)
         return regime
     else:
         logger.warning("regime_labels.csv not found — running full pipeline")

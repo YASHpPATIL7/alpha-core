@@ -396,7 +396,10 @@ def run_factor_engine() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     # Step 4: Save outputs
     os.makedirs(DATA_DIR, exist_ok=True)
 
-    factor_scores.to_csv(DATA_DIR / "factor_scores.csv", index=False)
+    # Fix 2026-05-27: index=True so ticker names become the CSV index column.
+    # kelly_sizing.py loads with index_col=0 — must match or every ticker lookup fails silently.
+    # Was: index=False (raw integers 0,1,2 as index → resid_vol[ticker] always misses)
+    factor_scores.to_csv(DATA_DIR / "factor_scores.csv", index=True)
     factors.to_csv(DATA_DIR / "factor_returns.csv")
     residuals.to_csv(DATA_DIR / "factor_residuals.csv")
 

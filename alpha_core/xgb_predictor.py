@@ -76,6 +76,7 @@ import json
 import logging
 from pathlib import Path
 from sklearn.metrics import r2_score, mean_squared_error
+from scipy.stats import spearmanr
 import xgboost as xgb
 
 logger = logging.getLogger(__name__)
@@ -334,9 +335,11 @@ def train_one_stock(ticker: str, df: pd.DataFrame) -> dict:
     # (does the predicted sign match the actual sign?)
     dir_acc = np.mean(np.sign(y_pred_test) == np.sign(y_test))
 
-    # IC (Information Coefficient) = Pearson correlation of prediction vs actual
-    # IC > 0.05 is considered meaningful in quant finance
-    ic = np.corrcoef(y_pred_test, y_test)[0, 1]
+    # IC (Information Coefficient) = Spearman RANK correlation of prediction vs actual
+    # Grinold & Kahn (2000) explicitly define IC as rank correlation — fat-tail robust.
+    # Pearson IC is distorted by a single 10-sigma prediction. Spearman is not.
+    # Fix applied 2026-05-27: was np.corrcoef (Pearson), now spearmanr.
+    ic = spearmanr(y_pred_test, y_test).correlation
 
     # Feature importance
     importance = dict(zip(feature_cols,
