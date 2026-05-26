@@ -1,6 +1,6 @@
 # Alpha-Core — Factor Signal Engine
 
-**Part 2 of 3 in a connected quant system: Vajra (Risk) → Alpha-Core (Signal) → Kuber (Allocation)**
+**Part 2 of 3 in a connected quant system: Indian Risk Engine → Alpha-Core → Portfolio Optimizer**
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue)](https://python.org)
 [![Alpaca](https://img.shields.io/badge/Alpaca-Paper%20Trading-green)](https://alpaca.markets)
@@ -65,8 +65,8 @@ All others:   FLAT — Bear regime, t-stat < 1.5
 ## System architecture
 
 ```
-Vajra (indian-risk-engine)     → DCC covariance, CVaR signals
-Alpha-Core (this repo)         → factor signals, regime, IC, Alpaca execution
-Kuber (ml-portfolio-optimizer) → Black-Litterman allocation, backtester
-main.py (Kuber)                → orchestrates all three: one command, live report
+Indian Risk Engine (indian-risk-engine)  → DCC covariance, CVaR signals
+Alpha-Core (this repo)                   → factor signals, regime, IC, Alpaca execution
+Portfolio Optimizer (ml-portfolio-optimizer) → Black-Litterman allocation, backtester
+main.py (Portfolio Optimizer)            → orchestrates all three: one command, live report
 ```
