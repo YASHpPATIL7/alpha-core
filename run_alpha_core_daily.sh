@@ -25,6 +25,9 @@ LOG_DIR="$PROJECT_DIR/logs"
 TODAY=$(date +%Y-%m-%d)
 LOGFILE="$LOG_DIR/alpha_core_${TODAY}.log"
 
+# Ensure alpha_core package is importable for standalone module calls
+export PYTHONPATH="$PROJECT_DIR:${PYTHONPATH:-}"
+
 mkdir -p "$LOG_DIR"
 
 # ── Header ────────────────────────────────────────────────────
