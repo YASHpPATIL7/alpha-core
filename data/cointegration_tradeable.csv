@@ -1,0 +1,4 @@
+stock_a,stock_b,r,trace_stat,trace_crit_95,maxeig_stat,maxeig_crit_95,beta_a,beta_b,alpha_a,alpha_b,halflife_days,spread_mean,spread_std,cointegrated
+TCS,BAJFINANCE,2,18.7794,15.4943,14.6132,14.2639,1.0,-0.2352,-0.01,0.0165,50.8,83.6271,11.6881,True
+HDFCBANK,INFY,1,18.3746,15.4943,15.0731,14.2639,1.0,-3.0604,-0.0105,0.001,49.8,-198.7497,32.9404,True
+RELIANCE,ITC,1,17.3906,15.4943,17.3502,14.2639,1.0,-0.4727,-0.0073,0.018,41.2,66.2281,14.3155,True

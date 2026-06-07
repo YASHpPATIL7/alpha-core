@@ -1,0 +1,42 @@
+ticker,date,source,text_preview,p_positive,p_neutral,p_negative,sentiment,confidence,sentiment_score,multiplier
+RELIANCE,2026-05-20,Yahoo Finance (live) — RELIANCE.NS,"How The Story On Reliance Industries (NSEI:RELIANCE) Is Shifting Around A ₹1,696...",0.0458,0.9258,0.0284,neutral,0.9258,0.0174,0.5087
+RELIANCE,2026-05-05,Yahoo Finance (live) — RELIANCE.NS,How The Evolving Story For Reliance Industries (NSEI:RELIANCE) Is Shaping Its Va...,0.6776,0.2561,0.0663,positive,0.6776,0.6112,0.8056
+RELIANCE,2026-05-05,Yahoo Finance (live) — RELIANCE.NS,"India's Reliance hands over documents in bribery probe, executive gets bail. By ...",0.7426,0.0921,0.1653,positive,0.7426,0.5773,0.7887
+HDFCBANK,2026-05-18,Yahoo Finance (live) — HDFCBANK.NS,Asian Equities Traded in the US as American Depositary Receipts Lower in Monday ...,0.017,0.0091,0.9739,negative,0.9739,-0.957,0.0215
+HDFCBANK,2026-05-15,Yahoo Finance (live) — HDFCBANK.NS,CMS Info Systems Ltd (BOM:543441) Q4 2026 Earnings Call Highlights: Navigating G...,0.9561,0.0261,0.0178,positive,0.9561,0.9384,0.9692
+HDFCBANK,2026-05-14,Yahoo Finance (live) — HDFCBANK.NS,Asian Equities Traded in the US as American Depositary Receipts Higher in Thursd...,0.952,0.0223,0.0258,positive,0.952,0.9262,0.9631
+ICICIBANK,2026-05-18,Yahoo Finance (live) — ICICIBANK.NS,Indian firms turn to floating-rate debt as interest rate hikes loom. By Khushi M...,0.894,0.0691,0.0369,positive,0.894,0.8572,0.9286
+ICICIBANK,2026-05-15,Yahoo Finance (live) — ICICIBANK.NS,CMS Info Systems Ltd (BOM:543441) Q4 2026 Earnings Call Highlights: Navigating G...,0.9561,0.0261,0.0178,positive,0.9561,0.9384,0.9692
+ICICIBANK,2026-05-14,Yahoo Finance (live) — ICICIBANK.NS,Asian Equities Traded in the US as American Depositary Receipts Higher in Thursd...,0.952,0.0223,0.0258,positive,0.952,0.9262,0.9631
+INFY,2026-05-19,Yahoo Finance (live) — INFY.NS,Asian Equities Traded in the US as American Depositary Receipts Modestly Lower i...,0.0162,0.0149,0.9689,negative,0.9689,-0.9527,0.0236
+INFY,2026-05-15,Yahoo Finance (live) — INFY.NS,Asian Equities Traded in the US as American Depositary Receipts Fall Sharply in ...,0.0115,0.0149,0.9735,negative,0.9735,-0.962,0.019
+INFY,2026-05-15,Yahoo Finance (live) — INFY.NS,Here’s Why Hedge Funds Are Still Bullish On Accenture (ACN) Despite Hitting 52-W...,0.0183,0.0238,0.9579,negative,0.9579,-0.9396,0.0302
+TCS,2026-05-17,Yahoo Finance (live) — TCS.NS,Rezolve AI TCS Alliance Puts Growth Ambitions Against Valuation Concerns. Rezolv...,0.758,0.0407,0.2013,positive,0.758,0.5568,0.7784
+TCS,2026-05-16,Yahoo Finance (live) — TCS.NS,Explainer-Why India’s Tata Sons is under pressure to list as trust divisions eme...,0.0697,0.1642,0.7661,negative,0.7661,-0.6964,0.1518
+TCS,2026-05-13,Yahoo Finance (live) — TCS.NS,TCS partners with Rezolve Ai to scale agentic AI commerce for retailers. The dea...,0.8404,0.1534,0.0062,positive,0.8404,0.8342,0.9171
+AXISBANK,2026-04-28,Yahoo Finance (live) — AXISBANK.NS,Axis Bank Ltd (FRA:UZC) (Full Year 2026) Earnings Call Highlights: Strong Growth...,0.9502,0.038,0.0117,positive,0.9502,0.9385,0.9693
+AXISBANK,2026-04-27,Yahoo Finance (live) — AXISBANK.NS,"Indian shares snap 3-session drop; markets track Mideast tensions, earnings. By ...",0.5813,0.0231,0.3956,positive,0.5813,0.1856,0.5928
+AXISBANK,2026-04-27,Yahoo Finance (live) — AXISBANK.NS,"India's Axis Bank slips on profit miss, $2 billion equity fundraise. April 27 (R...",0.0083,0.0168,0.9749,negative,0.9749,-0.9666,0.0167
+BAJFINANCE,2026-05-08,Yahoo Finance (live) — BAJFINANCE.NS,"Indian non-bank lenders plan $1.6 billion in debt sales as yields decline, banke...",0.866,0.101,0.033,positive,0.866,0.8329,0.9165
+BAJFINANCE,2026-04-30,Yahoo Finance (live) — BAJFINANCE.NS,"India's Bajaj Finance jumps as easing credit costs, asset quality gains boost ou...",0.9475,0.025,0.0276,positive,0.9475,0.9199,0.96
+BAJFINANCE,2026-04-29,Yahoo Finance (live) — BAJFINANCE.NS,"Indian non-bank lender Bajaj Finance posts 22% profit growth, pushes AI adoption...",0.9479,0.0276,0.0245,positive,0.9479,0.9234,0.9617
+DRREDDY,2026-05-14,Yahoo Finance (live) — DRREDDY.NS,Dr. Reddy's Laboratories Q4 Earnings Call Highlights. Dr. Reddy's Laboratories (...,0.9256,0.0188,0.0555,positive,0.9256,0.8701,0.9351
+DRREDDY,2026-05-13,Yahoo Finance (live) — DRREDDY.NS,"Dr. Reddy's Q4 Earnings and Revenues Miss Estimates, Stock Down. RDY stock down ...",0.0084,0.0177,0.9739,negative,0.9739,-0.9655,0.0172
+DRREDDY,2026-05-12,Yahoo Finance (live) — DRREDDY.NS,Dr Reddy's Laboratories Ltd (RDY) Full Year 2026 Earnings Call Highlights: Strat...,0.7982,0.0283,0.1735,positive,0.7982,0.6246,0.8123
+HINDUNILVR,2026-04-30,Yahoo Finance (live) — HINDUNILVR.NS,"Unilever's India unit hikes prices, cuts costs to offset war-led strain; Q4 prof...",0.9453,0.025,0.0297,positive,0.9453,0.9155,0.9578
+HINDUNILVR,2026-04-29,Yahoo Finance (live) — HINDUNILVR.NS,India's AWL flags 20% rise in oil-linked costs amid Middle East conflict. By Pra...,0.8968,0.022,0.0812,positive,0.8968,0.8156,0.9078
+HINDUNILVR,2026-04-21,Yahoo Finance (live) — HINDUNILVR.NS,Indian plastic maker Alternicq says Iran war has pushed up costs. By Abhirami G ...,0.9284,0.0215,0.0501,positive,0.9284,0.8783,0.9391
+ITC,2025-12-04,Yahoo Finance (live) — ITC.NS,British American Tobacco plans to offload stake in India's ITC Hotels. Dec 4 (Re...,0.7492,0.2146,0.0362,positive,0.7492,0.7131,0.8565
+ITC,2025-05-30,Yahoo Finance (live) — ITC.NS,"Stocks to watch this week: Broadcom, Lululemon, British American Tobacco, Dr Mar...",0.0324,0.9295,0.0381,neutral,0.9295,-0.0057,0.4971
+MARUTI,2026-05-05,Yahoo Finance (live) — MARUTI.NS,"India's Mahindra expects mid‑to‑high teens SUV growth, beats quarterly forecasts...",0.9241,0.0238,0.0521,positive,0.9241,0.8719,0.936
+MARUTI,2026-05-04,Yahoo Finance (live) — MARUTI.NS,"Indian shares advance as easing oil, state election results boost sentiment. By ...",0.9407,0.0248,0.0345,positive,0.9407,0.9062,0.9531
+MARUTI,2026-04-29,Yahoo Finance (live) — MARUTI.NS,Maruti Suzuki records “highest” annual sales and profit in FY25-26. The carmaker...,0.9547,0.0257,0.0196,positive,0.9547,0.9351,0.9675
+ONGC,2026-05-05,Yahoo Finance (live) — ONGC.NS,Why The Narrative Around Oil And Natural Gas (NSEI:ONGC) Is Shifting After Divid...,0.0742,0.8854,0.0405,neutral,0.8854,0.0337,0.5168
+ONGC,2026-04-21,Yahoo Finance (live) — ONGC.NS,How The Investment Story For Oil And Natural Gas (NSEI:ONGC) Is Quietly Shifting...,0.1383,0.8265,0.0352,neutral,0.8265,0.103,0.5515
+ONGC,2026-03-25,Yahoo Finance (live) — ONGC.NS,India Targets Import Cuts With Historic Oil and Gas Drilling Campaign. India’s O...,0.6593,0.1524,0.1883,positive,0.6593,0.471,0.7355
+SUNPHARMA,2026-05-07,Yahoo Finance (live) — SUNPHARMA.NS,Organon Buyout By Sun Pharma Shifts Focus To Cash Value And Timing. Organon & Co...,0.359,0.628,0.013,neutral,0.628,0.3461,0.673
+SUNPHARMA,2026-05-01,Yahoo Finance (live) — SUNPHARMA.NS,Organon (OGN)’s Investors React Strongly as Sun Pharma Bets Big on Specialty Dru...,0.903,0.0861,0.0109,positive,0.903,0.892,0.946
+SUNPHARMA,2026-04-28,Yahoo Finance (live) — SUNPHARMA.NS,"Micron initiated, Rambus downgraded: Wall Street's top analyst calls. Micron ini...",0.051,0.5644,0.3846,neutral,0.5644,-0.3336,0.3332
+WIPRO,2026-05-19,Yahoo Finance (live) — WIPRO.NS,Wipro Limited (WIT) Completes Acquisition of Olam Group’s Mindsprint. Wipro Limi...,0.2428,0.7486,0.0086,neutral,0.7486,0.2342,0.6171
+WIPRO,2026-05-19,Yahoo Finance (live) — WIPRO.NS,Asian Equities Traded in the US as American Depositary Receipts Modestly Lower i...,0.0162,0.0149,0.9689,negative,0.9689,-0.9527,0.0236
+WIPRO,2026-05-15,Yahoo Finance (live) — WIPRO.NS,India FMCG major Wipro invests in pan-Asia food brand Moi Soi. Moi Soi plans to ...,0.8301,0.1638,0.0061,positive,0.8301,0.8239,0.912

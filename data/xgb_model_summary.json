@@ -1,0 +1,464 @@
+[
+  {
+    "ticker": "RELIANCE",
+    "r2_train": 0.0133,
+    "r2_test": -0.0011,
+    "rmse_test_pct": 0.9724,
+    "dir_acc_test": 0.4838,
+    "ic_test": -0.0038,
+    "n_train": 1211,
+    "n_test": 587,
+    "best_iteration": 1,
+    "top_5_features": [
+      {
+        "feature": "resid_cum5d",
+        "importance": 0.08269999921321869
+      },
+      {
+        "feature": "resid_vol5d",
+        "importance": 0.08079999685287476
+      },
+      {
+        "feature": "is_black_swan",
+        "importance": 0.06350000202655792
+      },
+      {
+        "feature": "resid_lag5",
+        "importance": 0.06260000169277191
+      },
+      {
+        "feature": "factor_HML",
+        "importance": 0.060100000351667404
+      }
+    ]
+  },
+  {
+    "ticker": "HDFCBANK",
+    "r2_train": 0.0108,
+    "r2_test": 0.0003,
+    "rmse_test_pct": 1.1274,
+    "dir_acc_test": 0.5264,
+    "ic_test": 0.0107,
+    "n_train": 1211,
+    "n_test": 587,
+    "best_iteration": 1,
+    "top_5_features": [
+      {
+        "feature": "days_since_black_swan",
+        "importance": 0.07209999859333038
+      },
+      {
+        "feature": "regime",
+        "importance": 0.0697999969124794
+      },
+      {
+        "feature": "resid_lag10",
+        "importance": 0.06300000101327896
+      },
+      {
+        "feature": "factor_HML",
+        "importance": 0.06210000067949295
+      },
+      {
+        "feature": "resid_vol20d",
+        "importance": 0.058400001376867294
+      }
+    ]
+  },
+  {
+    "ticker": "ICICIBANK",
+    "r2_train": 0.023,
+    "r2_test": -0.0005,
+    "rmse_test_pct": 0.9757,
+    "dir_acc_test": 0.4889,
+    "ic_test": 0.0167,
+    "n_train": 1211,
+    "n_test": 587,
+    "best_iteration": 4,
+    "top_5_features": [
+      {
+        "feature": "regime",
+        "importance": 0.07259999960660934
+      },
+      {
+        "feature": "is_black_swan",
+        "importance": 0.06809999793767929
+      },
+      {
+        "feature": "resid_vol20d",
+        "importance": 0.06719999760389328
+      },
+      {
+        "feature": "resid_rank_20d",
+        "importance": 0.06620000302791595
+      },
+      {
+        "feature": "resid_sq_lag1",
+        "importance": 0.06080000102519989
+      }
+    ]
+  },
+  {
+    "ticker": "INFY",
+    "r2_train": 0.0151,
+    "r2_test": -0.0025,
+    "rmse_test_pct": 0.8158,
+    "dir_acc_test": 0.4685,
+    "ic_test": -0.022,
+    "n_train": 1211,
+    "n_test": 587,
+    "best_iteration": 3,
+    "top_5_features": [
+      {
+        "feature": "resid_lag5",
+        "importance": 0.06340000033378601
+      },
+      {
+        "feature": "resid_cum10d",
+        "importance": 0.061900001019239426
+      },
+      {
+        "feature": "factor_MKT",
+        "importance": 0.05959999933838844
+      },
+      {
+        "feature": "resid_lag2",
+        "importance": 0.057500001043081284
+      },
+      {
+        "feature": "factor_HML",
+        "importance": 0.057500001043081284
+      }
+    ]
+  },
+  {
+    "ticker": "TCS",
+    "r2_train": 0.1515,
+    "r2_test": 0.0014,
+    "rmse_test_pct": 1.1192,
+    "dir_acc_test": 0.5332,
+    "ic_test": 0.0574,
+    "n_train": 1211,
+    "n_test": 587,
+    "best_iteration": 32,
+    "top_5_features": [
+      {
+        "feature": "is_black_swan",
+        "importance": 0.0828000009059906
+      },
+      {
+        "feature": "regime",
+        "importance": 0.06889999657869339
+      },
+      {
+        "feature": "factor_MKT",
+        "importance": 0.062199998646974564
+      },
+      {
+        "feature": "resid_vol20d",
+        "importance": 0.0608999989926815
+      },
+      {
+        "feature": "resid_cum10d",
+        "importance": 0.05990000069141388
+      }
+    ]
+  },
+  {
+    "ticker": "AXISBANK",
+    "r2_train": 0.0056,
+    "r2_test": -0.0002,
+    "rmse_test_pct": 0.8525,
+    "dir_acc_test": 0.4719,
+    "ic_test": -0.0013,
+    "n_train": 1211,
+    "n_test": 587,
+    "best_iteration": 0,
+    "top_5_features": [
+      {
+        "feature": "resid_vol5d",
+        "importance": 0.07119999825954437
+      },
+      {
+        "feature": "resid_cum5d",
+        "importance": 0.06270000338554382
+      },
+      {
+        "feature": "resid_sq_lag1",
+        "importance": 0.061400000005960464
+      },
+      {
+        "feature": "resid_lag2",
+        "importance": 0.0608999989926815
+      },
+      {
+        "feature": "factor_MKT",
+        "importance": 0.06040000170469284
+      }
+    ]
+  },
+  {
+    "ticker": "BAJFINANCE",
+    "r2_train": 0.0045,
+    "r2_test": -0.0017,
+    "rmse_test_pct": 1.072,
+    "dir_acc_test": 0.4889,
+    "ic_test": -0.0077,
+    "n_train": 1211,
+    "n_test": 587,
+    "best_iteration": 0,
+    "top_5_features": [
+      {
+        "feature": "regime",
+        "importance": 0.093299999833107
+      },
+      {
+        "feature": "resid_lag3",
+        "importance": 0.06759999692440033
+      },
+      {
+        "feature": "resid_vol20d",
+        "importance": 0.060499999672174454
+      },
+      {
+        "feature": "factor_MKT",
+        "importance": 0.05779999867081642
+      },
+      {
+        "feature": "resid_lag5",
+        "importance": 0.054499998688697815
+      }
+    ]
+  },
+  {
+    "ticker": "DRREDDY",
+    "r2_train": 0.1677,
+    "r2_test": 0.0004,
+    "rmse_test_pct": 1.0718,
+    "dir_acc_test": 0.5196,
+    "ic_test": 0.0631,
+    "n_train": 1211,
+    "n_test": 587,
+    "best_iteration": 34,
+    "top_5_features": [
+      {
+        "feature": "resid_vol5d",
+        "importance": 0.07490000128746033
+      },
+      {
+        "feature": "regime",
+        "importance": 0.07240000367164612
+      },
+      {
+        "feature": "factor_MKT",
+        "importance": 0.06459999829530716
+      },
+      {
+        "feature": "resid_vol20d",
+        "importance": 0.061799999326467514
+      },
+      {
+        "feature": "is_black_swan",
+        "importance": 0.0617000013589859
+      }
+    ]
+  },
+  {
+    "ticker": "HINDUNILVR",
+    "r2_train": 0.0483,
+    "r2_test": 0.0054,
+    "rmse_test_pct": 1.0066,
+    "dir_acc_test": 0.5366,
+    "ic_test": 0.1023,
+    "n_train": 1211,
+    "n_test": 587,
+    "best_iteration": 8,
+    "top_5_features": [
+      {
+        "feature": "factor_RMW",
+        "importance": 0.0778999999165535
+      },
+      {
+        "feature": "resid_lag1",
+        "importance": 0.0625
+      },
+      {
+        "feature": "factor_CMA",
+        "importance": 0.05990000069141388
+      },
+      {
+        "feature": "resid_cum5d",
+        "importance": 0.0560000017285347
+      },
+      {
+        "feature": "factor_HML",
+        "importance": 0.05559999868273735
+      }
+    ]
+  },
+  {
+    "ticker": "ITC",
+    "r2_train": 0.0049,
+    "r2_test": -0.0004,
+    "rmse_test_pct": 1.1327,
+    "dir_acc_test": 0.5077,
+    "ic_test": 0.0343,
+    "n_train": 1211,
+    "n_test": 587,
+    "best_iteration": 0,
+    "top_5_features": [
+      {
+        "feature": "is_black_swan",
+        "importance": 0.0803999975323677
+      },
+      {
+        "feature": "resid_vol20d",
+        "importance": 0.061400000005960464
+      },
+      {
+        "feature": "factor_RMW",
+        "importance": 0.05889999866485596
+      },
+      {
+        "feature": "resid_cum10d",
+        "importance": 0.05700000002980232
+      },
+      {
+        "feature": "resid_lag5",
+        "importance": 0.05550000071525574
+      }
+    ]
+  },
+  {
+    "ticker": "MARUTI",
+    "r2_train": 0.0051,
+    "r2_test": -0.0013,
+    "rmse_test_pct": 0.8251,
+    "dir_acc_test": 0.5111,
+    "ic_test": -0.0345,
+    "n_train": 1211,
+    "n_test": 587,
+    "best_iteration": 0,
+    "top_5_features": [
+      {
+        "feature": "regime",
+        "importance": 0.10840000212192535
+      },
+      {
+        "feature": "resid_zscore_20d",
+        "importance": 0.07360000163316727
+      },
+      {
+        "feature": "is_black_swan",
+        "importance": 0.061500001698732376
+      },
+      {
+        "feature": "resid_rank_20d",
+        "importance": 0.06019999831914902
+      },
+      {
+        "feature": "factor_CMA",
+        "importance": 0.058800000697374344
+      }
+    ]
+  },
+  {
+    "ticker": "ONGC",
+    "r2_train": 0.0064,
+    "r2_test": -0.0032,
+    "rmse_test_pct": 1.0626,
+    "dir_acc_test": 0.4889,
+    "ic_test": -0.0994,
+    "n_train": 1211,
+    "n_test": 587,
+    "best_iteration": 0,
+    "top_5_features": [
+      {
+        "feature": "factor_CMA",
+        "importance": 0.06880000233650208
+      },
+      {
+        "feature": "resid_vol5d",
+        "importance": 0.06319999694824219
+      },
+      {
+        "feature": "regime",
+        "importance": 0.05950000137090683
+      },
+      {
+        "feature": "resid_zscore_20d",
+        "importance": 0.05900000035762787
+      },
+      {
+        "feature": "resid_sq_lag1",
+        "importance": 0.05889999866485596
+      }
+    ]
+  },
+  {
+    "ticker": "SUNPHARMA",
+    "r2_train": 0.0091,
+    "r2_test": -0.0055,
+    "rmse_test_pct": 0.8703,
+    "dir_acc_test": 0.4957,
+    "ic_test": -0.0077,
+    "n_train": 1211,
+    "n_test": 587,
+    "best_iteration": 1,
+    "top_5_features": [
+      {
+        "feature": "resid_lag1",
+        "importance": 0.06700000166893005
+      },
+      {
+        "feature": "resid_cum5d",
+        "importance": 0.061799999326467514
+      },
+      {
+        "feature": "resid_cum10d",
+        "importance": 0.061500001698732376
+      },
+      {
+        "feature": "regime",
+        "importance": 0.060100000351667404
+      },
+      {
+        "feature": "resid_lag5",
+        "importance": 0.05959999933838844
+      }
+    ]
+  },
+  {
+    "ticker": "WIPRO",
+    "r2_train": 0.0057,
+    "r2_test": 0.0008,
+    "rmse_test_pct": 0.8749,
+    "dir_acc_test": 0.5145,
+    "ic_test": 0.0153,
+    "n_train": 1211,
+    "n_test": 587,
+    "best_iteration": 0,
+    "top_5_features": [
+      {
+        "feature": "resid_lag3",
+        "importance": 0.07930000126361847
+      },
+      {
+        "feature": "is_black_swan",
+        "importance": 0.06560000032186508
+      },
+      {
+        "feature": "resid_lag1",
+        "importance": 0.0625
+      },
+      {
+        "feature": "regime",
+        "importance": 0.060100000351667404
+      },
+      {
+        "feature": "resid_lag2",
+        "importance": 0.057500001043081284
+      }
+    ]
+  }
+]
