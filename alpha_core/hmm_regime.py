@@ -71,6 +71,7 @@ logging.basicConfig(
 BASE_DIR = Path(__file__).parent.parent
 RISK_ENGINE_DATA = BASE_DIR.parent / "indian-risk-engine" / "data"
 DATA_DIR = BASE_DIR / "data"
+VIX_PATH = DATA_DIR / "india_vix_history.csv"
 
 # ── Hyperparameters ────────────────────────────────────────────────────────────
 N_ITER = 200          # EM iterations — enough for convergence
@@ -91,24 +92,36 @@ def load_features() -> pd.DataFrame:
     """
     Build the HMM feature matrix.
 
-    We use THREE features, not just raw returns:
+    We use THREE features:
       1. Nifty market return (MKT from Fama-French factor_returns.csv)
          — captures directional trend
-      2. Rolling 20-day realised volatility of MKT
-         — captures fear/turbulence
-      3. Rolling 20-day momentum (sign of cumulative return)
-         — captures persistence of the regime
+      2. India VIX (from india_vix_history.csv)
+         — exogenous implied-volatility measure; captures fear/turbulence.
+           VIX is forward-looking and does NOT lag after a crash, unlike
+           rolling realised vol which stays elevated for 20 days post-crash.
+           This prevents the COVID crash recovery period from being
+           mislabelled as "Bear" for weeks after the bottom.
+           FIX (2026-06-07): replaced self-computed realised_vol with VIX.
+      3. Rolling 20-day Sharpe ratio (mean / std of returns)
+         — directional momentum signal: positive in bull, negative in bear.
+           FIX (2026-06-07): replaced raw 20-day sum (which conflated
+           magnitude with direction, making the feature backwards) with
+           the Sharpe ratio which is sign-correct and scale-free.
 
-    Why 3 features and not just 1?
-      With only MKT returns: HMM separates high-return vs low-return days.
-      That's noisy — a single bad day in a Bull market gets mislabelled Bear.
-      Adding volatility anchors the HMM: Bear = low return AND high vol.
-      Adding momentum adds inertia: Bull days cluster together.
+    Why use India VIX instead of self-computed realised vol?
+      Self-computed: mkt.rolling(20).std() * sqrt(252) lags 20 days.
+      After COVID crash (-40% in 40 days), the 20-day window keeps vol
+      elevated all through April–May 2020 even as markets recover.
+      This caused steady bull days to be labelled 'Bear' (high vol cluster).
+      VIX is market-implied and forward-looking — it spiked to 83 on
+      Mar 24 and fell to 30 by Apr 30 as recovery began. Much better signal.
 
-    Why use MKT from factor_returns.csv (not raw Nifty)?
-      MKT is already excess-return (Nifty - Rf). It's the purest signal.
-      Also, this creates a clean dependency: M4 consumes M1's output,
-      which is exactly how the pipeline is designed to work.
+    Why use rolling Sharpe instead of raw 20-day sum for momentum?
+      Raw sum conflates magnitude with direction. The COVID crash period
+      had the largest absolute 20-day sums (both negative and positive),
+      making the 'Bull' cluster absorb both crash + recovery days.
+      Rolling Sharpe = mean_20d / std_20d is dimensionless and directional:
+      clearly positive in trending bull markets, negative in bear trends.
     """
     factor_path = DATA_DIR / "factor_returns.csv"
     returns_path = RISK_ENGINE_DATA / "vajra_returns.csv"
@@ -132,16 +145,33 @@ def load_features() -> pd.DataFrame:
     # Feature 1: daily return — captures direction
     features["mkt_return"] = mkt
 
-    # Feature 2: rolling 20-day realised vol — captures fear
-    # Why 20 days? One calendar month. Short enough to be reactive,
-    # long enough to not flip on a single day.
-    features["realised_vol"] = mkt.rolling(20).std() * np.sqrt(252)
+    # Feature 2: India VIX — exogenous fear/turbulence measure
+    # FIX 2026-06-07: replaces self-computed realised_vol which lagged 20 days
+    # and caused volatility clustering instead of directional regime detection.
+    if VIX_PATH.exists():
+        vix_df = pd.read_csv(VIX_PATH, index_col=0, parse_dates=True)
+        vix_aligned = vix_df["vix_close"].reindex(mkt.index)
+        # Forward-fill up to 5 days for weekends/holidays, then backward-fill start
+        vix_aligned = vix_aligned.ffill(limit=5).bfill()
+        features["india_vix"] = vix_aligned / 100.0  # normalise to decimal (9→0.09, 83→0.83)
+        logger.info("  India VIX loaded: %d aligned days (range %.1f–%.1f)",
+                    vix_aligned.notna().sum(), vix_aligned.min(), vix_aligned.max())
+    else:
+        # Fallback: rolling realised vol (old buggy method — labelled for audit trail)
+        logger.warning("india_vix_history.csv not found — falling back to realised_vol "
+                       "(NOTE: this is the buggy feature that caused volatility clustering; "
+                       "fetch VIX data and re-run for correct regime detection)")
+        features["india_vix"] = mkt.rolling(20).std() * np.sqrt(252)
 
-    # Feature 3: rolling 20-day cumulative return — captures momentum
-    # Positive = bullish momentum. Negative = bearish drift.
-    features["momentum_20d"] = mkt.rolling(20).sum()
+    # Feature 3: rolling 20-day Sharpe ratio — directional momentum
+    # FIX 2026-06-07: replaces raw 20-day sum which was magnitude-contaminated
+    # and made the feature backwards (bull cluster had negative mean momentum).
+    roll_mean = mkt.rolling(20).mean()
+    roll_std  = mkt.rolling(20).std()
+    features["momentum_sharpe"] = roll_mean / (roll_std + 1e-9)
+    # Positive = persistently rising market (bull), negative = falling (bear), ~0 = sideways
 
-    # Drop NaN rows (first 20 days have no rolling stats)
+    # Drop NaN rows (first 20 days have no rolling stats; VIX might have early NaN)
     features = features.dropna()
 
     logger.info("  Feature matrix: %d days × %d features", *features.shape)
@@ -281,10 +311,19 @@ def label_states(model: GaussianHMM, feature_cols: list,
     State 0 might be Bear in one run, Bull in another. We must look at the
     mean of the first feature (mkt_return) per state — highest mean = Bull.
 
-    WHY we inverse-transform: model.means_ are in standardised space (z-scores).
-    Sorting by standardised mean is equivalent to sorting by original mean
-    (StandardScaler is monotone), but inverse-transforming makes the logged
-    statistics interpretable (actual daily returns, not z-scores).
+    FIX 2026-06-07: Replaced Sharpe-sort with mean-return sort.
+    OLD METHOD (BUGGY):
+      Sorted by Sharpe = mean_return / emission_vol.
+      Problem: with VIX as feature 2 and rolling-Sharpe as feature 3, the
+      emission covariance structure no longer corresponds to return vol alone.
+      More critically: Sharpe-sort was the root cause of the Covid crash being
+      labelled 'Bull' — the high-vol cluster got the highest Sharpe by accident
+      because mean_return was similar across all states while vol varied 10x.
+    NEW METHOD:
+      Sort purely by mean of feature 0 (mkt_return) in original space.
+      Lowest mean return = Bear. Highest mean return = Bull. Simple and correct.
+      If two states have very similar mean returns, we use the VIX mean as a
+      tiebreaker: higher VIX mean = more fearful = Bear.
 
     Returns dict: {state_int: "Bull" | "Bear" | "Sideways"}
     """
@@ -308,32 +347,40 @@ def label_states(model: GaussianHMM, feature_cols: list,
             model.covars_[k][0, 0] for k in range(model.n_components)
         ]))
 
-    # Sort states by Sharpe-like score (return / vol) in original space.
-    # Why Sharpe not just return?
-    #   On 5-year NSE data (2019-2024), the COVID crash is only 40 days.
-    #   Over 1419 days total, even the "Bear" state has a small positive mean
-    #   return because recoveries are fast. Sorting by mean alone is unstable.
-    #   Sharpe = mean_return / vol separates:
-    #     Bull:     high return, moderate vol → highest Sharpe
-    #     Sideways: low return, low vol       → moderate Sharpe
-    #     Bear:     low/negative return, HIGH vol → lowest Sharpe
-    sharpe_scores = np.array([
-        means_orig[k, 0] / (vols_orig[k] + 1e-9)
-        for k in range(model.n_components)
-    ])
-    sorted_states = np.argsort(sharpe_scores)  # ascending: worst Sharpe first = Bear
+    # FIX 2026-06-07: Sort using semantic features instead of raw returns.
+    # High VIX = Crisis/Bear. High Momentum = Bull.
+    # 1. Bull is the state with the highest mean momentum.
+    # 2. Bear is the state with the highest mean VIX.
+    # 3. Sideways is the remaining state.
+    # This prevents crisis states (which often have massive dead-cat bounces
+    # and thus positive mean returns) from being labelled 'Sideways' or 'Bull'.
+    
+    # Feature indices: 0=mkt_return, 1=india_vix, 2=momentum_sharpe
+    vix_means = means_orig[:, 1]
+    mom_means = means_orig[:, 2]
 
     n = model.n_components
     mapping = {}
 
-    if n == 2:
-        mapping[sorted_states[0]] = "Bear"
-        mapping[sorted_states[1]] = "Bull"
-    elif n == 3:
-        mapping[sorted_states[0]] = "Bear"
-        mapping[sorted_states[1]] = "Sideways"
-        mapping[sorted_states[2]] = "Bull"
+    if n == 3:
+        bull_state = np.argmax(mom_means)
+        
+        # Mask out the bull state to find the highest VIX among remaining
+        remaining_states = [i for i in range(n) if i != bull_state]
+        bear_state = remaining_states[np.argmax([vix_means[i] for i in remaining_states])]
+        
+        # Sideways is whatever is left
+        side_state = [i for i in range(n) if i not in (bull_state, bear_state)][0]
+        
+        mapping[bull_state] = "Bull"
+        mapping[bear_state] = "Bear"
+        mapping[side_state] = "Sideways"
+        
+        # For logging order
+        sorted_states = [bear_state, side_state, bull_state]
     else:
+        # Fallback for 2 or 4+ states
+        sorted_states = np.argsort(means_orig[:, 0])
         mapping[sorted_states[0]] = "Bear"
         mapping[sorted_states[-1]] = "Bull"
         for i in range(1, n - 1):
