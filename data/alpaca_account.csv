@@ -1,2 +1,2 @@
 portfolio_value,cash,equity,total_pnl_usd,total_pnl_pct,n_positions,positions
-100000.0,100000.0,100000.0,0.0,0.0,0,[]
+100186.67,96989.84,100186.67,186.66999999999825,0.18666999999999825,1,"[{'symbol': 'XLV', 'qty': 21, 'avg_entry': 148.19619, 'cost_basis': 3112.11999, 'mkt_val': 3196.83, 'unrealized_pl': 84.71001, 'unrealized_pct': 2.722, 'weight_pct': 3.1908735962578656}]"
