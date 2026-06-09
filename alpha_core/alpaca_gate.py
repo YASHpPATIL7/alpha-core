@@ -289,13 +289,43 @@ def submit_orders(order_book: pd.DataFrame, api,
     submitted, skipped = [], []
     today = datetime.now().strftime("%Y%m%d")
 
+    # ── 0. Aggregate target_pct by ETF Proxy ──────────────────────────────
+    # BUGFIX: Previously, if multiple NSE stocks mapped to the same ETF
+    # (e.g. HDFCBANK, ICICIBANK -> XLF), the script would submit separate
+    # conflicting orders per NSE stock against the aggregate XLF holding.
+    # This caused "client_order_id must be unique" and massive over/under-leveraging.
+    # We must sum the targets for each ETF before trading.
+    
+    etf_targets = {}
+    etf_sources = {}
+    
     for _, row in order_book.iterrows():
-        symbol      = row["etf_proxy"]
-        nse         = row["nse_ticker"]
-        target_pct  = row["target_pct"]
-        action      = row["action"]
+        symbol = row["etf_proxy"]
+        nse    = row["nse_ticker"]
+        pct    = row["target_pct"]
+        
+        if symbol not in etf_targets:
+            etf_targets[symbol] = 0.0
+            etf_sources[symbol] = []
+            
+        etf_targets[symbol] += pct
+        if pct != 0:
+            etf_sources[symbol].append(f"{nse}({pct:.2f}%)")
+        else:
+            etf_sources[symbol].append(f"{nse}(0%)")
+
+    # ── Process each unique ETF ──────────────────────────────────────────
+    for symbol, aggregated_pct in etf_targets.items():
+        sources_str = ", ".join(etf_sources[symbol])
         current_qty = current_positions.get(symbol, 0)
         etf_price   = etf_prices.get(symbol, 100)
+
+        # Base record for logging
+        rec = {
+            "etf_proxy": symbol,
+            "nse_sources": sources_str,
+            "aggregated_pct": round(aggregated_pct, 4)
+        }
 
         # ── 1. STOP-LOSS ─────────────────────────────────────────────────────
         unreal_pct = stoploss_map.get(symbol, 0.0)
@@ -305,30 +335,30 @@ def submit_orders(order_book: pd.DataFrame, api,
             if api:
                 try:
                     api.close_position(symbol)
-                    submitted.append({**row.to_dict(), "status": "STOP_LOSS",
+                    submitted.append({**rec, "status": "STOP_LOSS",
                                       "order_id": "close_position",
                                       "delta_qty": -current_qty, "final_qty": 0})
                 except Exception as e:
                     logger.error("  [STOP-LOSS FAILED] %s: %s", symbol, e)
             else:
                 logger.info("  [DRY_RUN] STOP-LOSS close %s", symbol)
-                submitted.append({**row.to_dict(), "status": "DRY_STOP_LOSS",
+                submitted.append({**rec, "status": "DRY_STOP_LOSS",
                                   "order_id": f"DRY_SL_{symbol}",
                                   "delta_qty": -current_qty, "final_qty": 0})
             continue
 
         # ── 2. Compute target_qty with position cap ───────────────────────────
-        if target_pct == 0:
+        if aggregated_pct == 0:
             target_qty = 0
         else:
-            raw_notional    = portfolio_value * abs(target_pct) / 100
+            raw_notional    = portfolio_value * abs(aggregated_pct) / 100
             capped_notional = min(raw_notional, portfolio_value * MAX_ETF_WEIGHT)
             target_qty      = int(capped_notional / etf_price)
-            if target_pct < 0:
+            if aggregated_pct < 0:
                 target_qty = -target_qty    # short
             if capped_notional < raw_notional:
                 logger.info("  [CAP] %s capped at %.0f%% max (Kelly was %.2f%%)",
-                            symbol, MAX_ETF_WEIGHT * 100, abs(target_pct))
+                            symbol, MAX_ETF_WEIGHT * 100, abs(aggregated_pct))
 
         # ── 3. Delta ─────────────────────────────────────────────────────────
         delta = target_qty - current_qty
@@ -338,10 +368,10 @@ def submit_orders(order_book: pd.DataFrame, api,
             status = "HOLD" if current_qty != 0 else "FLAT_HOLD"
             logger.info("  [%-9s] %-6s  held=%-4d  target=%-4d  delta=%+d  (below threshold)",
                         status, symbol, current_qty, target_qty, delta)
-            submitted.append({**row.to_dict(), "status": status, "order_id": "N/A",
+            submitted.append({**rec, "status": status, "order_id": "N/A",
                               "delta_qty": delta, "final_qty": current_qty})
             if current_qty == 0 and target_qty == 0:
-                skipped.append(nse)
+                skipped.append(symbol)
             continue
 
         # ── 5. Execute delta trade ────────────────────────────────────────────
@@ -355,10 +385,10 @@ def submit_orders(order_book: pd.DataFrame, api,
                     label, symbol, current_qty, target_qty, delta, side.upper(), qty)
 
         if api is None:
-            logger.info("  [DRY_RUN] %s %d × %s  (proxy: %s | target %.2f%% | δ %+d)",
-                        side.upper(), qty, symbol, nse, target_pct, delta)
-            submitted.append({**row.to_dict(), "status": f"DRY_{label}",
-                              "order_id": f"DRY_{nse}_{today}",
+            logger.info("  [DRY_RUN] %s %d × %s  (target %.2f%% | δ %+d)",
+                        side.upper(), qty, symbol, aggregated_pct, delta)
+            submitted.append({**rec, "status": f"DRY_{label}",
+                              "order_id": f"DRY_{symbol}_{today}",
                               "delta_qty": delta, "final_qty": target_qty})
         else:
             try:
@@ -368,22 +398,22 @@ def submit_orders(order_book: pd.DataFrame, api,
                     side=side,
                     type="market",
                     time_in_force="day",
-                    client_order_id=f"alphacore_{nse}_{today}"
+                    client_order_id=f"alphacore_{symbol}_{today}"
                 )
                 logger.info("  [SUBMITTED] %s %d × %s → order_id=%s",
                             side.upper(), qty, symbol, order.id)
-                submitted.append({**row.to_dict(), "status": f"SUBMITTED_{label}",
+                submitted.append({**rec, "status": f"SUBMITTED_{label}",
                                   "order_id": order.id,
                                   "delta_qty": delta, "final_qty": target_qty})
             except Exception as e:
                 logger.error("  [FAILED] %s %s: %s", symbol, side, e)
-                submitted.append({**row.to_dict(), "status": f"ERROR: {e}",
+                submitted.append({**rec, "status": f"ERROR: {e}",
                                   "order_id": "N/A",
                                   "delta_qty": delta, "final_qty": current_qty})
 
     active  = [s for s in submitted if "HOLD" not in s["status"] and "FLAT" not in s["status"]]
     holding = [s for s in submitted if s["status"] == "HOLD"]
-    logger.info("  Traded: %d | Holding: %d | Skipped: %d",
+    logger.info("  Traded: %d ETFs | Holding: %d ETFs | Skipped: %d ETFs",
                 len(active), len(holding), len(skipped))
     return submitted
 
@@ -477,7 +507,6 @@ if __name__ == "__main__":
         if active.empty:
             print("No trades today — all positions at target weight.")
         else:
-            cols = [c for c in ["nse_ticker", "etf_proxy", "action",
-                                 "target_pct", "delta_qty", "final_qty",
-                                 "status", "xgb_signal"] if c in active.columns]
+            cols = [c for c in ["etf_proxy", "aggregated_pct", "delta_qty", 
+                                "final_qty", "status"] if c in active.columns]
             print(active[cols].to_string(index=False))
