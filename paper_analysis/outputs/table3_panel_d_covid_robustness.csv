@@ -1,0 +1,9 @@
+regime,predictor,f_stat,p_value,n_obs,sig
+Bear,FII_BUY,,,46,—
+Bear,FII_SELL,,,46,—
+Bull,FII_BUY,1.511,0.1844,624,
+Bull,FII_SELL,1.605,0.1568,624,
+Sideways,FII_BUY,3.499,0.0617,959,
+Sideways,FII_SELL,3.116,0.0778,959,
+ALL,FII_BUY,1.639,0.2007,1629,
+ALL,FII_SELL,2.165,0.1413,1629,

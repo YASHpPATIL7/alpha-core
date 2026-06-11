@@ -1,0 +1,16 @@
+regime,factor,f_stat_full,p_value_full,fdr_reject_full,testable_excovid,f_stat_excovid,p_value_excovid,n_obs_excovid,sig_excovid,sig_raw_excovid,p_fdr_excovid,fdr_reject_excovid
+Bull,MKT,0.474,0.4912,False,True,0.926,0.3364,607,,False,0.4726666666666667,False
+Bull,SMB,2.651,0.0714,False,True,2.599,0.1074,607,,False,0.3393333333333334,False
+Bull,HML,2.064,0.084,False,True,1.972,0.0973,607,,False,0.3393333333333334,False
+Bull,RMW,1.509,0.2219,False,True,1.733,0.1776,607,,False,0.3393333333333334,False
+Bull,CMA,1.982,0.0795,False,True,2.656,0.0219,607,*,True,0.21899999999999997,False
+Sideways,MKT,1.003,0.3672,False,True,1.594,0.2036,917,,False,0.3393333333333334,False
+Sideways,SMB,2.055,0.0848,False,True,1.536,0.1897,917,,False,0.3393333333333334,False
+Sideways,HML,0.754,0.5557,False,True,0.673,0.6105,917,,False,0.6105,False
+Sideways,RMW,0.894,0.4093,False,True,0.856,0.4254,917,,False,0.4726666666666667,False
+Sideways,CMA,1.209,0.3052,False,True,1.007,0.3889,917,,False,0.4726666666666667,False
+Bear,MKT,1.432,0.2339,False,False,,,46,—,False,,False
+Bear,SMB,8.214,0.0049,False,False,,,46,—,False,,False
+Bear,HML,0.514,0.7255,False,False,,,46,—,False,,False
+Bear,RMW,1.731,0.134,False,False,,,46,—,False,,False
+Bear,CMA,6.981,0.0094,False,False,,,46,—,False,,False
