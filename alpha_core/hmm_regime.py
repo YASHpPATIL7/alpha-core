@@ -582,11 +582,25 @@ def run_hmm_pipeline(force_n_states: int = None) -> pd.DataFrame:
 
     model = fit_hmm(X, n_states)
 
-    # ── Decode: Viterbi algorithm ──────────────────────────────
-    # predict() uses the Viterbi algorithm to find the single most probable
-    # sequence of hidden states given all observations.
-    # This is O(K²T) — linear in time, quadratic in states.
-    regime_ints = model.predict(X)   # shape: (T,)
+    # ── Decode: Forward-algorithm FILTERED probabilities (historical labels) ─────
+    # Bug fix A2 (2026-06-12): Viterbi (model.predict) decodes the globally
+    # most-probable path using ALL data, meaning the label at date t uses
+    # data from after t. This is look-ahead and contaminates backtest features.
+    #
+    # Fix: use forward-algorithm filtered probabilities — predict_proba() returns
+    # P(state | obs_1..obs_t) at each t, conditioning ONLY on past data.
+    # We take argmax of each row = the filtered estimate at each date.
+    # This is clean: the regime label on day t uses only data up to and
+    # including day t.
+    #
+    # Viterbi is still used for the final current-day LIVE readout only,
+    # since for the last row both methods condition on the same data.
+    filtered_probs = model.predict_proba(X)   # shape: (T, K), P(state|past)
+    regime_ints    = filtered_probs.argmax(axis=1).astype(int)  # shape: (T,)
+
+    # Viterbi for live readout ONLY (last row) — identical to filtered at T
+    viterbi_ints = model.predict(X)
+    today_regime_int_viterbi = int(viterbi_ints[-1])
 
     # ── Label states ───────────────────────────────────────────
     state_map = label_states(model, feature_cols, scaler=scaler)
@@ -609,8 +623,8 @@ def run_hmm_pipeline(force_n_states: int = None) -> pd.DataFrame:
     for name, count in regime_counts.items():
         logger.info("  %-12s  %4d days  (%.1f%%)", name, count, count / total * 100)
 
-    # ── Today's regime ─────────────────────────────────────────
-    today_regime_int  = regime_ints[-1]
+    # ── Today's regime: use Viterbi for live readout ───────────────────
+    today_regime_int  = today_regime_int_viterbi
     today_regime_name = state_map[today_regime_int]
     logger.info("\n── CURRENT REGIME (latest observation) ──────────────────────────")
     logger.info("  📍 %s", today_regime_name.upper())

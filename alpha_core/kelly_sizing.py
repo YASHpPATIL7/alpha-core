@@ -104,9 +104,15 @@ def get_regime_multiplier(regime_df: pd.DataFrame) -> tuple:
     Returns (regime_name, multiplier) from the latest observation.
 
     Why latest row?
-      regime_labels.csv is produced by M4's Viterbi decode — every row
-      is the most-probable state given all history up to that date.
-      The last row is today's (or most recent trading day's) regime.
+      regime_labels.csv is produced by M4's forward-algorithm filtered decode —
+      every row is the argmax of P(state | obs_1..obs_t), conditioning ONLY on
+      data up to and including that date (no look-ahead). The last row is today's
+      (or most recent trading day's) live regime readout.
+
+      Note: historical rows are NOT Viterbi-smoothed; using Viterbi would mean
+      the label on any past date conditions on future data, contaminating XGBoost
+      features and Kelly backtest history. The live single-day readout uses Viterbi
+      since for the terminal observation both methods are equivalent.
     """
     latest = regime_df.iloc[-1]
     name   = latest["regime_name"]
@@ -166,8 +172,13 @@ def compute_pairs_kelly(signals: pd.DataFrame,
     for (stock_a, stock_b), grp in pair_ids:
         grp = grp.sort_index()
 
-        # Daily spread returns (normalised by |spread|)
-        spread_ret = grp["spread"].pct_change().dropna()
+        # Daily spread returns (dollar P&L on normalised prices)
+        # Using pct_change() on a zero-crossing spread is mathematically invalid and causes infinite returns.
+        # We calculate P&L divided by gross capital. Since prices start at 100:
+        latest = grp.iloc[-1]
+        beta_b = latest["beta_b"]
+        gross_cap = 100.0 * (1.0 + abs(beta_b))
+        spread_ret = grp["spread"].diff().dropna() / gross_cap
 
         if len(spread_ret) < LOOKBACK_DAYS:
             logger.warning("  %s/%s — insufficient history (%d days), skipping",
@@ -186,7 +197,10 @@ def compute_pairs_kelly(signals: pd.DataFrame,
         full_kelly = mu_spread / sigma2_spread
 
         # Apply half-Kelly + regime gate
-        effective_f = HALF_KELLY * abs(full_kelly) * regime_mult
+        # Bug fix B1: abs(full_kelly) would treat negative-edge pairs (μ≤0)
+        # identically to positive-edge pairs. Kelly says "no bet" when μ≤0;
+        # we floor at 0 so magnitude correctly collapses to zero.
+        effective_f = HALF_KELLY * max(full_kelly, 0.0) * regime_mult
 
         # Get latest signal and α weights
         latest = grp.iloc[-1]
@@ -304,7 +318,9 @@ def compute_factor_kelly(scores: pd.DataFrame,
         full_kelly = alpha / (sigma2_resid + 1e-12)
 
         # Apply half-Kelly + regime gate
-        effective_f = HALF_KELLY * abs(full_kelly) * regime_mult
+        # Bug fix B1: abs(full_kelly) inflates negative-alpha bets.
+        # Floor at 0: Kelly says "no bet" when alpha ≤ 0; effective_f collapses.
+        effective_f = HALF_KELLY * max(full_kelly, 0.0) * regime_mult
 
         # Significance filter: only take positions with t-stat > 1.5
         T_THRESH = 1.5
@@ -312,18 +328,18 @@ def compute_factor_kelly(scores: pd.DataFrame,
             pos = 0.0
             action = "SKIP"
             note = f"t={alpha_t:.2f} < {T_THRESH} (insufficient edge)"
-        elif alpha <= 0 and regime_name != "Bear":
-            # Negative alpha stocks: only short in Bear (and we're at 0 anyway)
+        elif alpha <= 0:
+            # Negative alpha: Kelly already zeroed effective_f, skip cleanly.
             pos = 0.0
             action = "SKIP"
-            note = f"Negative alpha in {regime_name} regime — avoid"
+            note = f"Non-positive alpha ({alpha:.5f}/day) — no edge"
         elif regime_mult == 0.0:
             pos = 0.0
             action = "FLAT"
             note = "Bear regime — all factor bets off"
         else:
             pos = float(np.clip(effective_f, MIN_POSITION_PCT, MAX_POSITION_PCT))
-            action = "LONG" if alpha > 0 else "SHORT"
+            action = "LONG"   # SHORT removed: was unreachable (negative alpha skipped above)
             note = f"t={alpha_t:.2f} | α={alpha:.5f}/day"
 
         results.append({

@@ -52,13 +52,19 @@ Features (engineered from residuals + factors + regime):
   REGIME: HMM regime label (0/1/2 = Bear/Sideways/Bull from M4)
     → Allows XGBoost to condition predictions on market state
 
-Train/Test split — TIME SERIES ONLY (NO SHUFFLE):
-  Train: 2019-01-03 → 2023-12-29  (~1260 days, ~5 years)
-  Test:  2024-01-02 → 2024-12-30  (~250 days, out-of-sample)
+Train/Val/Test split — TIME SERIES ONLY (NO SHUFFLE):
+  Train: 2019-01-03 → VAL_START-1   (~85% of train window)
+  Val:   VAL_START  → 2023-12-29    (~15% of train window — used for early stopping)
+  Test:  2024-01-02 → 2024-12-30    (~250 days, fully out-of-sample — NEVER seen by model)
   Why no shuffle: shuffling would cause look-ahead bias — day 1000's features
   would train on day 1001's residuals. Time series MUST be split chronologically.
 
-Hyperparameters:
+  Bug fix 2026-06-12 (A1): Previously early_stopping used eval_set=[(X_test, y_test)].
+  This means the number of boosting rounds was selected by minimising loss on the test
+  set — every reported test metric (IC, R², DirAcc) was optimistically biased because
+  the test set participated in model selection. Fixed by carving a validation slice from
+  the end of the training window. Expected: reported IC drops from biased to honest value.
+  That drop is documented — it IS the audit story.
   n_estimators=300:   300 trees in the boosting ensemble
   max_depth=4:        Shallow trees. Deeper = more overfitting on noisy returns.
                       Quant rule of thumb: max_depth ≤ 4 for daily return prediction.
@@ -88,8 +94,9 @@ logging.basicConfig(
 BASE_DIR = Path(__file__).parent.parent
 DATA_DIR = BASE_DIR / "data"
 
-TRAIN_END = "2023-12-29"   # last training day
-TEST_START = "2024-01-02"  # first test day (out-of-sample)
+TRAIN_END  = "2023-12-29"   # last training day (inclusive)
+VAL_START  = "2023-07-01"   # start of val slice (last ~15% of train window)
+TEST_START = "2024-01-02"   # first test day — NEVER used during training
 
 # ── Black Swan Events — Indian Market Context ──────────────────────────────
 # These are structural market dislocations where normal idiosyncratic patterns
@@ -267,8 +274,9 @@ def build_features(ticker: str,
     # ── Target: NEXT day's residual ───────────────────────────
     df["target"] = r.shift(-1)   # residual_t+1
 
-    # Drop rows with NaN (from rolling windows + shift)
-    df = df.dropna()
+    # Drop rows where features are NaN, but KEEP the last row where target is NaN
+    feature_cols = [c for c in df.columns if c != "target"]
+    df = df.dropna(subset=feature_cols)
 
     return df
 
@@ -298,18 +306,26 @@ def train_one_stock(ticker: str, df: pd.DataFrame) -> dict:
     """
     feature_cols = [c for c in df.columns if c != "target"]
 
-    train = df[df.index <= TRAIN_END]
-    test  = df[df.index >= TEST_START]
+    # Drop target NaNs ONLY for the train/test sets. (The last row has target=NaN).
+    train = df[df.index <= TRAIN_END].dropna(subset=["target"])
+    test  = df[df.index >= TEST_START].dropna(subset=["target"])
 
-    if len(train) < 200 or len(test) < 50:
-        logger.warning("  %s — insufficient data (train=%d, test=%d), skipping",
-                       ticker, len(train), len(test))
+    # ── Train/Val split: val carved from END of train window ──────────
+    # Fix A1: early stopping must use a validation fold, NOT the test set.
+    # Carve the last ~15% of train data (July–Dec 2023) as the val fold.
+    # Test set (2024) remains 100% unseen during model selection.
+    train_pure = train[train.index < VAL_START]
+    val        = train[train.index >= VAL_START]
+
+    if len(train_pure) < 150 or len(val) < 30:
+        logger.warning("  %s — insufficient train/val split (train=%d, val=%d), skipping",
+                       ticker, len(train_pure), len(val))
         return None
 
-    X_train = train[feature_cols].values
-    y_train = train["target"].values
-    X_test  = test[feature_cols].values
-    y_test  = test["target"].values
+    X_train_pure = train_pure[feature_cols].values
+    y_train_pure = train_pure["target"].values
+    X_val        = val[feature_cols].values
+    y_val        = val["target"].values
 
     model = xgb.XGBRegressor(
         **XGB_PARAMS,
@@ -317,17 +333,17 @@ def train_one_stock(ticker: str, df: pd.DataFrame) -> dict:
         eval_metric="rmse",
     )
     model.fit(
-        X_train, y_train,
-        eval_set=[(X_test, y_test)],
+        X_train_pure, y_train_pure,
+        eval_set=[(X_val, y_val)],   # ← val fold only; test set stays untouched
         verbose=False,
     )
 
     # Predictions
-    y_pred_train = model.predict(X_train)
+    y_pred_train = model.predict(X_train_pure)
     y_pred_test  = model.predict(X_test)
 
     # Metrics
-    r2_train  = r2_score(y_train, y_pred_train)
+    r2_train  = r2_score(y_train_pure, y_pred_train)
     r2_test   = r2_score(y_test,  y_pred_test)
     rmse_test = np.sqrt(mean_squared_error(y_test, y_pred_test))
 
@@ -361,7 +377,8 @@ def train_one_stock(ticker: str, df: pd.DataFrame) -> dict:
         "ic_test":         round(ic, 4),
         "top_features":    top_features,
         "next_day_pred":   round(next_day_pred * 100, 4),  # in % per day
-        "n_train":         len(train),
+        "n_train":         len(train_pure),
+        "n_val":           len(val),
         "n_test":          len(test),
         "best_iteration":  model.best_iteration,
     }
