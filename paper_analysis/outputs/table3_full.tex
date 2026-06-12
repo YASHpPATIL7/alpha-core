@@ -1,0 +1,59 @@
+\begin{table}[htbp]
+\centering
+\caption{FII Flows, Factor Premia, and Regime Dynamics}
+\label{tab:fii_factor_regimes}
+\small
+\vspace{4pt}
+\begin{subtable}{\textwidth}
+\centering
+\caption*{\textbf{Panel A:} Regime-Conditional Granger Causality: FII Net Flow $\rightarrow$ Market Return}
+\begin{tabular}{lrrrl}
+\toprule
+Regime & $F$-stat & $p$-value & Best Lag & Decision \\
+\midrule
+ALL (pooled) & 1.074 & 0.3002 & 1 & Fail \\
+Bull & 0.969 & 0.3799 & 2 & Fail \\
+Sideways & 1.371 & 0.2543 & 2 & Fail \\
+Bear & 2.306 & 0.1316 & 1 & Fail \\
+\bottomrule
+\end{tabular}
+\end{subtable}
+\vspace{8pt}
+\begin{subtable}{\textwidth}
+\centering
+\caption*{\textbf{Panel B:} FII Flow $\rightarrow$ Factor Premia by Regime: $F$-statistics (best lag)}
+\begin{tabular}{lrrrrr}
+\toprule
+Regime & \textsc{MKT} & \textsc{SMB} & \textsc{HML} & \textsc{RMW} & \textsc{CMA} \\
+\midrule
+Bull & 0.97 & 2.12 & 1.35 & 0.31 & 1.60 \\
+Sideways & 1.37 & 1.54 & 0.22 & 0.81 & 0.62 \\
+Bear & 2.31 & 5.68* & 0.61 & 1.39 & 2.85* \\
+\bottomrule
+\end{tabular}
+\end{subtable}
+\vspace{8pt}
+\begin{subtable}{0.55\textwidth}
+\centering
+\caption*{\textbf{Panel C:} FII as Bear Onset Predictor (Logit)}
+\begin{tabular}{lrrrr}
+\toprule
+Variable & $\beta$ & Odds Ratio & $z$ & $p$ \\
+\midrule
+fii_lag1 & -0.088 & 0.916 & -0.48 & 0.6337 \\
+fii_lag2 & +0.014 & 1.014 & +0.06 & 0.9500 \\
+fii_lag3 & +0.057 & 1.058 & +0.26 & 0.7950 \\
+fii_lag4 & -0.010 & 0.990 & -0.05 & 0.9635 \\
+fii_lag5 & -0.107 & 0.899 & -0.60 & 0.5510 \\
+\midrule
+McFadden $R^2$ & \multicolumn{4}{c}{0.0038} \\
+AUC-ROC & \multicolumn{4}{c}{0.5463} \\
+\bottomrule
+\end{tabular}
+\end{subtable}
+\vspace{4pt}
+\begin{flushleft}
+\scriptsize
+\textit{Notes:} FII net flow is normalised by 252-day rolling mean of $|\text{flow}|$. Panel A tests Granger causality between normalised FII flow and Nifty~50 market return within each HMM regime. Panel B reports best-lag $F$-statistics for FII$\rightarrow$Factor Granger tests within each regime (15 joint tests); $^\dagger$ denotes cells surviving Benjamini--Hochberg false discovery rate correction ($q=0.05$) applied jointly across all 15 cells. COVID robustness (excluding 2020-02-01 to 2020-06-30) reported in Appendix Table~A2. Panel C models probability of Bear regime onset within 5 trading days using lagged FII flows (lags 1--5); AUC$>$0.65 indicates an economically useful early-warning signal. $^{*}p<0.05$, $^{**}p<0.01$, $^{***}p<0.001$. Granger tests use SSR $F$-test with HAC standard errors; non-stationary series first-differenced (ADF $p<0.10$). Minimum 80 observations required for within-regime tests.
+\end{flushleft}
+\end{table}

@@ -1,0 +1,20 @@
+\begin{table}[htbp]
+\centering
+\caption{Walk-Forward Strategy Comparison (2021--2026, Monthly Rebalance, 0.25\% Costs)}
+\label{tab:strategy_comparison}
+\begin{tabular}{lrrrrrrrr}
+\toprule
+Strategy & Ann.Ret\% & Vol\% & Sharpe & Sortino & MaxDD\% & Calmar & $t$-stat \\
+\midrule
+\textbf{Regime-Aware} & 10.85 & 13.55 & 0.800 & 1.119 & -17.47 & 0.621 & 1.81 \\
+Static HRP & 9.15 & 12.81 & 0.714 & 1.046 & -18.58 & 0.492 & 1.62 \\
+MVO MaxSharpe & 14.78 & 14.52 & 1.018 & 1.418 & -14.95 & 0.988 & 2.31 \\
+Buy-and-Hold & 9.75 & 13.31 & 0.733 & 1.026 & -17.97 & 0.543 & 1.66 \\
+\midrule
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Note:} Walk-forward backtest on 14 NSE large-cap stocks, 2021--2026. Regime-Aware strategy allocates to MVO Max-Sharpe weights in Bull regime, HRP weights in Sideways, and equal-weight in Bear, switching monthly. Transaction cost of 0.25\% one-way is applied on each rebalance's turnover. HMM regime labels are from the full-sample model (documented limitation: full walk-forward would require monthly HMM refitting).
+\end{tablenotes}
+\end{table}

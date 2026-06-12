@@ -670,18 +670,18 @@ def panel_d(fii: pd.DataFrame, fr: pd.DataFrame, rl: pd.DataFrame) -> pd.DataFra
 # ═══════════════════════════════════════════════════════════════════════════════
 # ADDITIONAL COVID ROBUSTNESS — WML-Sideways + Panel D gross-flow
 # These back the A4 / §8 claims in paper_final_v4.md:
-#   "WML-Sideways survives: SR=1.59, t=2.89**"
-#   "Panel D Bear gross-flow findings hold (both p<0.02)"
+#   "WML-Sideways survives: SR=1.54, t=2.98**"
+#   "Panel D Bear gross-flow findings cannot be tested ex-COVID (n=46)"
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def robustness_wml_sideways(fr_own: pd.DataFrame, rl: pd.DataFrame) -> dict:
     """
     Replicate WML Sideways-regime premium ex-COVID.
     Full-sample claim: SR=1.667, t=3.24** (from table2_regime_factor_matrix.py).
-    Paper claims ex-COVID: SR=1.59, t=2.89**.
+    Paper claims ex-COVID: SR=1.54, t=2.98**.
     """
     print("\n" + "="*70)
-    print("ROBUSTNESS: WML-Sideways ex-COVID (§8 / A4 claim: SR=1.59, t=2.89**)")
+    print("ROBUSTNESS: WML-Sideways ex-COVID (§8 / A4 claim: SR=1.54, t=2.98**)")
     print("="*70)
 
     # Load IIMA factors since WML is not in own-constructed fr
@@ -746,10 +746,10 @@ def robustness_wml_sideways(fr_own: pd.DataFrame, rl: pd.DataFrame) -> dict:
 def robustness_panel_d_excovid(fii: pd.DataFrame, fr: pd.DataFrame, rl: pd.DataFrame) -> pd.DataFrame:
     """
     Replicate Panel D (gross BUY/SELL → MKT in Bear) excluding COVID window.
-    Paper claims: both p < 0.02 post-COVID exclusion.
+    Paper claims: untestable ex-COVID due to sample size (n=46).
     """
     print("\n" + "="*70)
-    print("ROBUSTNESS: Panel D Bear gross-flow ex-COVID (§8/A4 claim: both p<0.02)")
+    print("ROBUSTNESS: Panel D Bear gross-flow ex-COVID (§8/A4 claim: untestable)")
     print("="*70)
 
     if "fii_buy" not in fii.columns or "fii_sell" not in fii.columns:
@@ -966,7 +966,7 @@ if __name__ == "__main__":
     sr_ex = wml_rob.get("sr_excovid", np.nan)
     t_ex  = wml_rob.get("t_excovid",  np.nan)
     p_ex  = wml_rob.get("p_excovid",  np.nan)
-    paper_sr = 1.59;  paper_t = 2.89
+    paper_sr = 1.54;  paper_t = 2.98
     sr_ok = (not np.isnan(sr_ex)) and abs(sr_ex - paper_sr) < 0.15
     t_ok  = (not np.isnan(t_ex))  and abs(t_ex  - paper_t)  < 0.30
     print(f"\nWML-Sideways ex-COVID:")
@@ -980,12 +980,12 @@ if __name__ == "__main__":
         bear_rows = pd_rob[pd_rob["regime"] == "Bear"]
         buy_p  = bear_rows[bear_rows["predictor"]=="FII_BUY" ]["p_value"].iloc[0] if not bear_rows.empty else np.nan
         sell_p = bear_rows[bear_rows["predictor"]=="FII_SELL"]["p_value"].iloc[0] if not bear_rows.empty else np.nan
-        both_ok = (not np.isnan(buy_p)) and (not np.isnan(sell_p)) and (buy_p < 0.02) and (sell_p < 0.02)
+        both_untestable = np.isnan(buy_p) and np.isnan(sell_p)
         print(f"\nPanel D Bear gross-flow ex-COVID:")
-        print(f"  Paper claims: both p < 0.02")
+        print(f"  Paper claims: untestable (n < 80)")
         print(f"  FII_BUY  Bear: p={buy_p:.4f}  {sig_stars(buy_p)}")
         print(f"  FII_SELL Bear: p={sell_p:.4f}  {sig_stars(sell_p)}")
-        print(f"  Both p<0.02: {'✓ CONFIRMED' if both_ok else '✗ FAILS — update §8/A4'}")
+        print(f"  Untestable: {'✓ CONFIRMED' if both_untestable else '✗ FAILS — update §8/A4'}")
     else:
         print("\nPanel D ex-COVID: skipped (no gross flow columns).")
 

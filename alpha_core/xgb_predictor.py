@@ -326,6 +326,8 @@ def train_one_stock(ticker: str, df: pd.DataFrame) -> dict:
     y_train_pure = train_pure["target"].values
     X_val        = val[feature_cols].values
     y_val        = val["target"].values
+    X_test       = test[feature_cols].values
+    y_test       = test["target"].values
 
     model = xgb.XGBRegressor(
         **XGB_PARAMS,
@@ -453,6 +455,7 @@ def save_outputs(results: list, residuals: pd.DataFrame,
             "dir_acc_test":   r["dir_acc_test"],
             "ic_test":        r["ic_test"],
             "n_train":        r["n_train"],
+            "n_val":          r["n_val"],
             "n_test":         r["n_test"],
             "best_iteration": r["best_iteration"],
             "top_5_features": [{"feature": f, "importance": v}

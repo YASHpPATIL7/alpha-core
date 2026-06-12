@@ -55,6 +55,7 @@ Failure modes (always documented):
 import numpy as np
 import pandas as pd
 from hmmlearn.hmm import GaussianHMM
+from scipy.stats import multivariate_normal
 import logging
 import os
 import warnings
@@ -582,20 +583,52 @@ def run_hmm_pipeline(force_n_states: int = None) -> pd.DataFrame:
 
     model = fit_hmm(X, n_states)
 
+    def filtered_state_probs(model, X):
+        """True forward-pass filtered probabilities P(state_t | x_1..x_t).
+
+        hmmlearn's predict_proba() runs forward-backward (smoothed posteriors —
+        they condition on the FULL sample, future included). This function runs
+        the forward recursion only, normalised at each step, so the probability
+        at time t conditions exclusively on observations up to and including t.
+        """
+        T = X.shape[0]
+        K = model.n_components
+
+        # Per-frame emission likelihoods B[t, k] = p(x_t | state k)
+        B = np.zeros((T, K))
+        for k in range(K):
+            cov = model.covars_[k]
+            if cov.ndim == 1:                # covariance_type="diag"
+                cov = np.diag(cov)
+            B[:, k] = multivariate_normal.pdf(
+                X, mean=model.means_[k], cov=cov, allow_singular=True)
+        B = np.clip(B, 1e-300, None)         # underflow guard
+
+        alpha = np.zeros((T, K))
+        alpha[0] = model.startprob_ * B[0]
+        alpha[0] /= alpha[0].sum()
+        A = model.transmat_
+        for t in range(1, T):
+            alpha[t] = B[t] * (alpha[t - 1] @ A)
+            s = alpha[t].sum()
+            alpha[t] = alpha[t] / s if (np.isfinite(s) and s > 0) \
+                       else np.full(K, 1.0 / K)
+        return alpha
+
     # ── Decode: Forward-algorithm FILTERED probabilities (historical labels) ─────
-    # Bug fix A2 (2026-06-12): Viterbi (model.predict) decodes the globally
-    # most-probable path using ALL data, meaning the label at date t uses
-    # data from after t. This is look-ahead and contaminates backtest features.
+    # Bug fix 1 (2026-06-12): hmmlearn's predict_proba() runs forward-backward
+    # (smoothed posteriors), which means every historical label still uses
+    # future data. We implement an explicit forward-only recursion using the
+    # fitted model's parameters so P(state_t | x_1..x_t) conditions exclusively
+    # on observations up to and including t.
     #
-    # Fix: use forward-algorithm filtered probabilities — predict_proba() returns
-    # P(state | obs_1..obs_t) at each t, conditioning ONLY on past data.
     # We take argmax of each row = the filtered estimate at each date.
     # This is clean: the regime label on day t uses only data up to and
     # including day t.
     #
     # Viterbi is still used for the final current-day LIVE readout only,
     # since for the last row both methods condition on the same data.
-    filtered_probs = model.predict_proba(X)   # shape: (T, K), P(state|past)
+    filtered_probs = filtered_state_probs(model, X)   # shape: (T, K), P(state|past)
     regime_ints    = filtered_probs.argmax(axis=1).astype(int)  # shape: (T,)
 
     # Viterbi for live readout ONLY (last row) — identical to filtered at T

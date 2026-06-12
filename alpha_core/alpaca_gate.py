@@ -206,7 +206,25 @@ def build_order_book() -> pd.DataFrame:
       4. Remaining → LONG at gated_pct%
     """
     try:
-        factor_gated = pd.read_csv(DATA_DIR / "kelly_positions_factor_gated.csv")
+        gated_path = DATA_DIR / "kelly_positions_factor_gated.csv"
+        # Fix 2026-06-12 (Bug 21b): guard originally compared against
+        # "kelly_positions.csv", which does not exist on disk — the existence
+        # check failed and the guard silently skipped (fail-OPEN). Correct
+        # upstream file is kelly_positions_factor.csv, and the guard now
+        # fails CLOSED: missing files also refuse to trade.
+        kelly_path = DATA_DIR / "kelly_positions_factor.csv"
+
+        if not gated_path.exists() or not kelly_path.exists():
+            missing = gated_path.name if not gated_path.exists() else kelly_path.name
+            logger.error("STALE DATA GUARD: %s missing — refusing to trade.", missing)
+            return pd.DataFrame()
+        if gated_path.stat().st_mtime < kelly_path.stat().st_mtime:
+            logger.error("STALE DATA GUARD: kelly_positions_factor_gated.csv is older "
+                         "than kelly_positions_factor.csv. FinBERT (M6) likely failed. "
+                         "Refusing to trade.")
+            return pd.DataFrame()
+                
+        factor_gated = pd.read_csv(gated_path)
     except FileNotFoundError:
         logger.error("kelly_positions_factor_gated.csv not found. Run finbert_sentiment.py first.")
         return pd.DataFrame()

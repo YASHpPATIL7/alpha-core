@@ -1,0 +1,6 @@
+regime,n_days,mean_ann,vol_ann,sharpe,t_stat,p_value,sig,factor
+Full Sample,1729,3.72,17.96,0.207,0.54,0.5871,,MKT
+Full Sample,1729,2.21,12.7,0.174,0.46,0.6487,,SMB
+Full Sample,1729,3.34,12.28,0.272,0.71,0.4762,,HML
+Full Sample,1729,-3.11,12.47,-0.249,-0.65,0.5141,,RMW
+Full Sample,1729,3.23,14.36,0.225,0.59,0.5557,,CMA

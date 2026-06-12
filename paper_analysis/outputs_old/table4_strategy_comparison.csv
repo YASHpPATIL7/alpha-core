@@ -1,0 +1,5 @@
+Strategy,Total Ret%,Ann Ret%,Ann Vol%,Sharpe,Sortino,MaxDD%,Calmar,t-stat
+Regime-Aware,65.72,10.75,13.54,0.794,1.103,-17.47,0.615,1.8
+Static HRP,53.43,9.15,12.81,0.714,1.046,-18.58,0.492,1.62
+MVO MaxSharpe,102.41,14.78,14.52,1.018,1.418,-14.95,0.988,2.31
+Buy-and-Hold,57.68,9.75,13.31,0.733,1.026,-17.97,0.543,1.66

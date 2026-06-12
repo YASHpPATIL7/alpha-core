@@ -1,0 +1,9 @@
+regime,predictor,f_stat,p_value,best_lag,n_obs,sig
+ALL,FII_BUY,2.032,0.1074,3,1669,
+ALL,FII_SELL,1.757,0.1533,3,1669,
+Bull,FII_BUY,1.368,0.2343,5,621,
+Bull,FII_SELL,1.431,0.2112,5,621,
+Sideways,FII_BUY,4.873,0.0275,1,925,*
+Sideways,FII_SELL,4.384,0.0366,1,925,*
+Bear,FII_BUY,2.393,0.0959,2,123,
+Bear,FII_SELL,1.938,0.1486,2,123,

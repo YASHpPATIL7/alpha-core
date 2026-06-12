@@ -104,15 +104,16 @@ def get_regime_multiplier(regime_df: pd.DataFrame) -> tuple:
     Returns (regime_name, multiplier) from the latest observation.
 
     Why latest row?
-      regime_labels.csv is produced by M4's forward-algorithm filtered decode —
+      regime_labels.csv is produced by M4's explicit forward-algorithm recursion —
       every row is the argmax of P(state | obs_1..obs_t), conditioning ONLY on
       data up to and including that date (no look-ahead). The last row is today's
       (or most recent trading day's) live regime readout.
 
-      Note: historical rows are NOT Viterbi-smoothed; using Viterbi would mean
-      the label on any past date conditions on future data, contaminating XGBoost
-      features and Kelly backtest history. The live single-day readout uses Viterbi
-      since for the terminal observation both methods are equivalent.
+      Note: historical rows are NOT hmmlearn's predict_proba() smoothed posteriors;
+      using smoothed posteriors would mean the label on any past date conditions
+      on future data, contaminating XGBoost features and Kelly backtest history.
+      The live single-day readout uses Viterbi since for the terminal observation
+      both methods are equivalent.
     """
     latest = regime_df.iloc[-1]
     name   = latest["regime_name"]

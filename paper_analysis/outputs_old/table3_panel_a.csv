@@ -1,0 +1,5 @@
+regime,f_stat,p_value,best_lag,n_obs
+ALL (pooled),1.074,0.3002,1,1669
+Bull,0.969,0.3799,2,621
+Sideways,1.371,0.2543,2,925
+Bear,2.306,0.1316,1,122

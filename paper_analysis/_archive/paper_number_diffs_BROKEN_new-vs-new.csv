@@ -1,0 +1,162 @@
+table,metric,old_value,new_value
+Regime Counts,Bull days,638,638
+Regime Counts,Sideways days,968,968
+Regime Counts,Bear days,123,123
+Regime Labels,% Changed,0.0,0.00%
+Sanity Check,COVID Crash (2020-03-23),Bear,Bear
+Table 2,BullxMKT t_stat,1.19,1.19
+Table 2,BullxMKT p_value,0.2349,0.2349
+Table 2,BullxSMB t_stat,0.23,0.23
+Table 2,BullxSMB p_value,0.8207,0.8207
+Table 2,BullxHML t_stat,0.34,0.34
+Table 2,BullxHML p_value,0.7321,0.7321
+Table 2,BullxRMW t_stat,-0.66,-0.66
+Table 2,BullxRMW p_value,0.5068,0.5068
+Table 2,BullxCMA t_stat,0.7,0.7
+Table 2,BullxCMA p_value,0.4847,0.4847
+Table 2,SidewaysxMKT t_stat,-0.75,-0.75
+Table 2,SidewaysxMKT p_value,0.4538,0.4538
+Table 2,SidewaysxSMB t_stat,-0.26,-0.26
+Table 2,SidewaysxSMB p_value,0.7914,0.7914
+Table 2,SidewaysxHML t_stat,1.08,1.08
+Table 2,SidewaysxHML p_value,0.2821,0.2821
+Table 2,SidewaysxRMW t_stat,-0.62,-0.62
+Table 2,SidewaysxRMW p_value,0.5334,0.5334
+Table 2,SidewaysxCMA t_stat,0.74,0.74
+Table 2,SidewaysxCMA p_value,0.4603,0.4603
+Table 2,BearxMKT t_stat,0.31,0.31
+Table 2,BearxMKT p_value,0.7531,0.7531
+Table 2,BearxSMB t_stat,0.89,0.89
+Table 2,BearxSMB p_value,0.373,0.373
+Table 2,BearxHML t_stat,-0.31,-0.31
+Table 2,BearxHML p_value,0.7564,0.7564
+Table 2,BearxRMW t_stat,0.22,0.22
+Table 2,BearxRMW p_value,0.8235,0.8235
+Table 2,BearxCMA t_stat,-0.52,-0.52
+Table 2,BearxCMA p_value,0.6037,0.6037
+Panel A,ALL (pooled) f_stat,1.074,1.074
+Panel A,ALL (pooled) p_value,0.3002,0.3002
+Panel A,Bull f_stat,0.969,0.969
+Panel A,Bull p_value,0.3799,0.3799
+Panel A,Sideways f_stat,1.371,1.371
+Panel A,Sideways p_value,0.2543,0.2543
+Panel A,Bear f_stat,2.306,2.306
+Panel A,Bear p_value,0.1316,0.1316
+Panel B,BullxMKT f_stat,0.969,0.969
+Panel B,BullxMKT p_value,0.3799,0.3799
+Panel B,BullxMKT p_fdr,0.5556,0.5556
+Panel B,BullxMKT fdr_reject,False,False
+Panel B,BullxSMB f_stat,2.121,2.121
+Panel B,BullxSMB p_value,0.1208,0.1208
+Panel B,BullxSMB p_fdr,0.4238,0.4238
+Panel B,BullxSMB fdr_reject,False,False
+Panel B,BullxHML f_stat,1.349,1.349
+Panel B,BullxHML p_value,0.2503,0.2503
+Panel B,BullxHML p_fdr,0.4238,0.4238
+Panel B,BullxHML fdr_reject,False,False
+Panel B,BullxRMW f_stat,0.308,0.308
+Panel B,BullxRMW p_value,0.7354,0.7354
+Panel B,BullxRMW p_fdr,0.7879,0.7879
+Panel B,BullxRMW fdr_reject,False,False
+Panel B,BullxCMA f_stat,1.597,1.597
+Panel B,BullxCMA p_value,0.2034,0.2034
+Panel B,BullxCMA p_fdr,0.4238,0.4238
+Panel B,BullxCMA fdr_reject,False,False
+Panel B,SidewaysxMKT f_stat,1.371,1.371
+Panel B,SidewaysxMKT p_value,0.2543,0.2543
+Panel B,SidewaysxMKT p_fdr,0.4238,0.4238
+Panel B,SidewaysxMKT fdr_reject,False,False
+Panel B,SidewaysxSMB f_stat,1.542,1.542
+Panel B,SidewaysxSMB p_value,0.202,0.202
+Panel B,SidewaysxSMB p_fdr,0.4238,0.4238
+Panel B,SidewaysxSMB fdr_reject,False,False
+Panel B,SidewaysxHML f_stat,0.222,0.222
+Panel B,SidewaysxHML p_value,0.9531,0.9531
+Panel B,SidewaysxHML p_fdr,0.9531,0.9531
+Panel B,SidewaysxHML fdr_reject,False,False
+Panel B,SidewaysxRMW f_stat,0.812,0.812
+Panel B,SidewaysxRMW p_value,0.4445,0.4445
+Panel B,SidewaysxRMW p_fdr,0.5556,0.5556
+Panel B,SidewaysxRMW fdr_reject,False,False
+Panel B,SidewaysxCMA f_stat,0.625,0.625
+Panel B,SidewaysxCMA p_value,0.4293,0.4293
+Panel B,SidewaysxCMA p_fdr,0.5556,0.5556
+Panel B,SidewaysxCMA fdr_reject,False,False
+Panel B,BearxMKT f_stat,2.306,2.306
+Panel B,BearxMKT p_value,0.1316,0.1316
+Panel B,BearxMKT p_fdr,0.4238,0.4238
+Panel B,BearxMKT fdr_reject,False,False
+Panel B,BearxSMB f_stat,5.68,5.68
+Panel B,BearxSMB p_value,0.0188,0.0188
+Panel B,BearxSMB p_fdr,0.204,0.204
+Panel B,BearxSMB fdr_reject,False,False
+Panel B,BearxHML f_stat,0.613,0.613
+Panel B,BearxHML p_value,0.6543,0.6543
+Panel B,BearxHML p_fdr,0.755,0.755
+Panel B,BearxHML fdr_reject,False,False
+Panel B,BearxRMW f_stat,1.386,1.386
+Panel B,BearxRMW p_value,0.2354,0.2354
+Panel B,BearxRMW p_fdr,0.4238,0.4238
+Panel B,BearxRMW fdr_reject,False,False
+Panel B,BearxCMA f_stat,2.85,2.85
+Panel B,BearxCMA p_value,0.0272,0.0272
+Panel B,BearxCMA p_fdr,0.204,0.204
+Panel B,BearxCMA fdr_reject,False,False
+Panel C,AUC,AUC-ROC: 0.5463 → Weak signal (near random),AUC-ROC: 0.5463 → Weak signal (near random)
+Panel D,Bear FII_BUY f_stat,2.393,2.393
+Panel D,Bear FII_BUY p_value,0.0959,0.0959
+Panel D,Bear FII_SELL f_stat,1.938,1.938
+Panel D,Bear FII_SELL p_value,0.1486,0.1486
+Table 4,Regime-Aware Sharpe,0.794,0.8
+Table 4,Regime-Aware t-stat,1.8,1.81
+Table 4,Static HRP Sharpe,0.714,0.714
+Table 4,Static HRP t-stat,1.62,1.62
+Table 4,MVO MaxSharpe Sharpe,1.018,1.018
+Table 4,MVO MaxSharpe t-stat,2.31,2.31
+Table 4,Buy-and-Hold Sharpe,0.733,0.733
+Table 4,Buy-and-Hold t-stat,1.66,1.66
+A4 Panel B,BullxMKT f_stat_excovid,1.185,1.185
+A4 Panel B,BullxMKT p_value_excovid,0.3065,0.3065
+A4 Panel B,BullxMKT fdr_reject_excovid,False,False
+A4 Panel B,BullxSMB f_stat_excovid,1.737,1.737
+A4 Panel B,BullxSMB p_value_excovid,0.177,0.177
+A4 Panel B,BullxSMB fdr_reject_excovid,False,False
+A4 Panel B,BullxHML f_stat_excovid,1.272,1.272
+A4 Panel B,BullxHML p_value_excovid,0.2796,0.2796
+A4 Panel B,BullxHML fdr_reject_excovid,False,False
+A4 Panel B,BullxRMW f_stat_excovid,0.503,0.503
+A4 Panel B,BullxRMW p_value_excovid,0.6051,0.6051
+A4 Panel B,BullxRMW fdr_reject_excovid,False,False
+A4 Panel B,BullxCMA f_stat_excovid,1.974,1.974
+A4 Panel B,BullxCMA p_value_excovid,0.0807,0.0807
+A4 Panel B,BullxCMA fdr_reject_excovid,False,False
+A4 Panel B,SidewaysxMKT f_stat_excovid,2.446,2.446
+A4 Panel B,SidewaysxMKT p_value_excovid,0.0872,0.0872
+A4 Panel B,SidewaysxMKT fdr_reject_excovid,False,False
+A4 Panel B,SidewaysxSMB f_stat_excovid,0.954,0.954
+A4 Panel B,SidewaysxSMB p_value_excovid,0.4319,0.4319
+A4 Panel B,SidewaysxSMB fdr_reject_excovid,False,False
+A4 Panel B,SidewaysxHML f_stat_excovid,0.013,0.013
+A4 Panel B,SidewaysxHML p_value_excovid,0.9078,0.9078
+A4 Panel B,SidewaysxHML fdr_reject_excovid,False,False
+A4 Panel B,SidewaysxRMW f_stat_excovid,0.711,0.711
+A4 Panel B,SidewaysxRMW p_value_excovid,0.4914,0.4914
+A4 Panel B,SidewaysxRMW fdr_reject_excovid,False,False
+A4 Panel B,SidewaysxCMA f_stat_excovid,0.537,0.537
+A4 Panel B,SidewaysxCMA p_value_excovid,0.657,0.657
+A4 Panel B,SidewaysxCMA fdr_reject_excovid,False,False
+A4 Panel B,BearxMKT f_stat_excovid,,
+A4 Panel B,BearxMKT p_value_excovid,,
+A4 Panel B,BearxMKT fdr_reject_excovid,False,False
+A4 Panel B,BearxSMB f_stat_excovid,,
+A4 Panel B,BearxSMB p_value_excovid,,
+A4 Panel B,BearxSMB fdr_reject_excovid,False,False
+A4 Panel B,BearxHML f_stat_excovid,,
+A4 Panel B,BearxHML p_value_excovid,,
+A4 Panel B,BearxHML fdr_reject_excovid,False,False
+A4 Panel B,BearxRMW f_stat_excovid,,
+A4 Panel B,BearxRMW p_value_excovid,,
+A4 Panel B,BearxRMW fdr_reject_excovid,False,False
+A4 Panel B,BearxCMA f_stat_excovid,,
+A4 Panel B,BearxCMA p_value_excovid,,
+A4 Panel B,BearxCMA fdr_reject_excovid,False,False
