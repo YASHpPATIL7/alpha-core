@@ -97,8 +97,19 @@ def run_pipeline(skip_finbert: bool = False):
     # ── M6 ───────────────────────────────────────────────────────
     section("M6 — FinBERT Sentiment Gating")
     if skip_finbert:
-        logger.warning("M6 SKIPPED (--skip-finbert). Using last saved sentiment.csv.")
-        results["M6"] = "SKIPPED"
+        # Bug 21 root-cause fix (2026-06-12): skipping FinBERT must NOT skip
+        # the gate. apply_gate_only() re-applies the last saved sentiment to
+        # TODAY's Kelly output (neutralised if stale), so the gated file M10
+        # reads is always fresh.
+        logger.warning("M6 model SKIPPED (--skip-finbert). Applying gate from "
+                       "last saved sentiment to today's Kelly output.")
+        try:
+            from alpha_core.finbert_sentiment import apply_gate_only
+            apply_gate_only()
+            results["M6"] = "GATE-ONLY (sentiment reused)"
+        except Exception as e:
+            logger.error("M6 gate-only FAILED: %s", e)
+            results["M6"] = f"FAIL: {e}"
     else:
         try:
             from alpha_core.finbert_sentiment import run_finbert_pipeline

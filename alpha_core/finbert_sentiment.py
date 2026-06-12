@@ -705,6 +705,51 @@ def run_finbert_pipeline() -> pd.DataFrame:
     return sentiment_df
 
 
+def apply_gate_only(max_age_days: int = 5):
+    """
+    Bug 21 root-cause fix (2026-06-12).
+
+    The daily cron runs `main.py --skip-finbert`, which previously meant the
+    gated position files were NEVER regenerated — M10 consumed a gated file
+    frozen at the last manual FinBERT run while M5's Kelly sizing moved on
+    daily. This function decouples the CHEAP step (applying the sentiment
+    gate to today's Kelly output) from the EXPENSIVE step (fetching news and
+    running the FinBERT model).
+
+    It reuses the last saved sentiment scores. If they are older than
+    `max_age_days`, every multiplier is reset to a conservative neutral so
+    stale opinions cannot tilt fresh positions — the gate still runs, the
+    file is still fresh, and the M10 staleness guard passes for the right
+    reason.
+    """
+    sent_path = DATA_DIR / "finbert_sentiment.csv"
+    if not sent_path.exists():
+        logger.error("apply_gate_only: finbert_sentiment.csv missing — "
+                     "run the full FinBERT pipeline once first.")
+        return None
+
+    sentiment_df = pd.read_csv(sent_path)
+    age_days = (pd.Timestamp.now()
+                - pd.Timestamp.fromtimestamp(sent_path.stat().st_mtime)).days
+    if age_days > max_age_days:
+        logger.warning("apply_gate_only: sentiment is %dd old (> %dd) — "
+                       "neutralising multipliers (0.85).", age_days, max_age_days)
+        sentiment_df["multiplier"] = 0.85
+        sentiment_df["sentiment"]  = "stale-neutral"
+
+    gated = gate_kelly_positions(sentiment_df)
+
+    if gated["pairs"]:
+        pd.DataFrame(gated["pairs"]).to_csv(
+            DATA_DIR / "kelly_positions_pairs_gated.csv", index=False)
+    if gated["factor"]:
+        pd.DataFrame(gated["factor"]).to_csv(
+            DATA_DIR / "kelly_positions_factor_gated.csv", index=False)
+
+    logger.info("apply_gate_only: gated files regenerated from today's Kelly "
+                "output using %dd-old sentiment.", age_days)
+    return gated
+
 
 if __name__ == "__main__":
     df = run_finbert_pipeline()
