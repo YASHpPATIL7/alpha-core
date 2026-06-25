@@ -1,7 +1,2 @@
 etf_proxy,nse_sources,aggregated_pct,status,order_id,delta_qty,final_qty
-XLE,"RELIANCE(0%), ONGC(0%)",0.0,FLAT_HOLD,N/A,0,0
-XLF,"HDFCBANK(0%), ICICIBANK(0%), AXISBANK(0%), BAJFINANCE(0%)",0.0,FLAT_HOLD,N/A,0,0
-QQQ,"INFY(0%), TCS(0%), WIPRO(0%)",0.0,FLAT_HOLD,N/A,0,0
-XLV,"DRREDDY(0%), SUNPHARMA(3.25%)",3.254,HOLD,N/A,0,21
-XLP,"HINDUNILVR(0%), ITC(0%)",0.0,FLAT_HOLD,N/A,0,0
-XLY,MARUTI(0%),0.0,FLAT_HOLD,N/A,0,0
+SPY,"0(0%), 1(0%), 2(0%), 3(0%), 4(0%), 5(0%), 6(0%), 7(0%), 8(0%), 9(0%), 10(0%), 11(0%), 12(0%), 13(0%)",0.0,FLAT_HOLD,N/A,0,0
