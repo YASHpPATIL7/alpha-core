@@ -491,14 +491,41 @@ def run_cointegration_scanner() -> pd.DataFrame:
         logger.info("  simply be no idiosyncratic cointegration right now. Better to show")
         logger.info("  zero than to trade market-beta artefacts.")
 
+    # ── MONITORED WATCHLIST ─────────────────────────────────────────────────
+    # Same-sector pairs ranked by factor-neutral (residual) cointegration
+    # strength. These are economically coherent candidates that did NOT clear
+    # the strict Johansen bar (or the half-life band) — shown as "monitored,
+    # not traded" so the methodology is visible even when nothing is tradeable.
+    same_sector = results[results["same_sector"]].copy()
+    same_sector = same_sector.sort_values("resid_trace_stat", ascending=False)
+    # exclude any that are already tradeable
+    trade_keys = set(zip(cointegrated["stock_a"], cointegrated["stock_b"]))
+    same_sector = same_sector[~same_sector.apply(
+        lambda r: (r["stock_a"], r["stock_b"]) in trade_keys, axis=1)]
+    watchlist = same_sector.head(5).copy()
+    watchlist["gap_to_crit"] = (watchlist["trace_crit_95"]
+                                - watchlist["resid_trace_stat"]).round(2)
+
+    if len(watchlist):
+        logger.info("\n── MONITORED WATCHLIST (same-sector, not yet tradeable) ────────────")
+        logger.info("  %-12s %-12s %-11s %9s %8s  %s",
+                    "Stock A", "Stock B", "Sector", "ResTrace", "Crit", "Mechanism")
+        logger.info("  " + "─" * 78)
+        for _, r in watchlist.iterrows():
+            logger.info("  %-12s %-12s %-11s %9.2f %8.2f  %s",
+                        r["stock_a"], r["stock_b"], r["sector_a"],
+                        r["resid_trace_stat"], r["trace_crit_95"], r["mechanism"])
+
     # ── Save outputs ───────────────────────────────────────────────────────
     os.makedirs(DATA_DIR, exist_ok=True)
     results.to_csv(DATA_DIR / "cointegration_all_pairs.csv", index=False)
     cointegrated.to_csv(DATA_DIR / "cointegration_tradeable.csv", index=False)
+    watchlist.to_csv(DATA_DIR / "cointegration_watchlist.csv", index=False)
 
     logger.info("\n  SAVED:")
     logger.info("  cointegration_all_pairs.csv  — %d pairs (raw + residual + sector)", len(results))
     logger.info("  cointegration_tradeable.csv  — %d tradeable pairs", tradeable)
+    logger.info("  cointegration_watchlist.csv  — %d monitored same-sector pairs", len(watchlist))
     logger.info("=" * 70)
 
     return cointegrated

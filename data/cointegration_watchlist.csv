@@ -1,0 +1,6 @@
+stock_a,stock_b,sector_a,sector_b,same_sector,mechanism,r,trace_stat,trace_crit_95,maxeig_stat,maxeig_crit_95,beta_a,beta_b,alpha_a,alpha_b,halflife_days,spread_mean,spread_std,raw_cointegrated,raw_trace_stat,resid_cointegrated,resid_trace_stat,cointegrated,gap_to_crit
+INFY,TCS,IT,IT,True,shared USD/INR & global tech-spend exposure,0,20.3129,15.4943,11.3005,14.2639,,,,,,,,False,16.1028,False,20.3129,False,-4.82
+AXISBANK,BAJFINANCE,Financials,Financials,True,"shared rate cycle, credit growth & deposit dynamics",0,20.0609,15.4943,13.0552,14.2639,,,,,,,,False,7.8867,False,20.0609,False,-4.57
+ICICIBANK,BAJFINANCE,Financials,Financials,True,"shared rate cycle, credit growth & deposit dynamics",0,17.247,15.4943,10.8494,14.2639,,,,,,,,False,9.5834,False,17.247,False,-1.75
+RELIANCE,ONGC,Energy,Energy,True,shared crude-oil & energy-policy exposure,0,16.8696,15.4943,13.2671,14.2639,,,,,,,,False,11.2664,False,16.8696,False,-1.38
+HDFCBANK,BAJFINANCE,Financials,Financials,True,"shared rate cycle, credit growth & deposit dynamics",0,15.9488,15.4943,12.001,14.2639,,,,,,,,False,8.791,False,15.9488,False,-0.45

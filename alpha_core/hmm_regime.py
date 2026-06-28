@@ -357,6 +357,7 @@ def label_states(model: GaussianHMM, feature_cols: list,
     # and thus positive mean returns) from being labelled 'Sideways' or 'Bull'.
     
     # Feature indices: 0=mkt_return, 1=india_vix, 2=momentum_sharpe
+    ret_means = means_orig[:, 0]
     vix_means = means_orig[:, 1]
     mom_means = means_orig[:, 2]
 
@@ -364,19 +365,32 @@ def label_states(model: GaussianHMM, feature_cols: list,
     mapping = {}
 
     if n == 3:
-        bull_state = np.argmax(mom_means)
-        
-        # Mask out the bull state to find the highest VIX among remaining
-        remaining_states = [i for i in range(n) if i != bull_state]
-        bear_state = remaining_states[np.argmax([vix_means[i] for i in remaining_states])]
-        
-        # Sideways is whatever is left
-        side_state = [i for i in range(n) if i not in (bull_state, bear_state)][0]
-        
+        # FIX 2026-06-28: RETURN-AWARE composite labelling.
+        # The previous rule set Bull = max momentum and Bear = max VIX. Defining
+        # Bear by VIX ALONE meant a low-volatility grinding decline (e.g. the
+        # H1-2022 rate-hike bear) was never tagged Bear — it leaked into "Bull"
+        # or "Sideways", which is exactly why the live label skewed bullish.
+        # We now rank states by a balanced "bull score" that rewards trend and
+        # momentum and penalises turbulence:
+        #     bull_score = z(mean_return) + z(momentum) − z(VIX)
+        # Top score = Bull, bottom = Bear, middle = Sideways. This catches BOTH
+        # crisis bears (high VIX, e.g. COVID) AND slow grind-down bears
+        # (negative return, modest VIX) in one rule.
+        def _z(x):
+            x = np.asarray(x, dtype=float)
+            s = x.std()
+            return (x - x.mean()) / s if s > 1e-12 else np.zeros_like(x)
+
+        bull_score = _z(ret_means) + _z(mom_means) - _z(vix_means)
+        order = np.argsort(bull_score)          # ascending: most bearish → most bullish
+        bear_state = int(order[0])
+        side_state = int(order[1])
+        bull_state = int(order[-1])
+
         mapping[bull_state] = "Bull"
         mapping[bear_state] = "Bear"
         mapping[side_state] = "Sideways"
-        
+
         # For logging order
         sorted_states = [bear_state, side_state, bull_state]
     else:
