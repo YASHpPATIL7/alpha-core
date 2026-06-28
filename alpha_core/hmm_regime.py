@@ -659,8 +659,14 @@ def run_hmm_pipeline(force_n_states: int = None) -> pd.DataFrame:
     # ── Today's regime: use Viterbi for live readout ───────────────────
     today_regime_int  = today_regime_int_viterbi
     today_regime_name = state_map[today_regime_int]
+    today_probs = filtered_probs[-1]
+    prob_str = " · ".join(
+        f"{state_map[k]} {today_probs[k]*100:.0f}%" for k in range(model.n_components)
+    )
     logger.info("\n── CURRENT REGIME (latest observation) ──────────────────────────")
-    logger.info("  📍 %s", today_regime_name.upper())
+    logger.info("  📍 %s  (confidence %.0f%%)", today_regime_name.upper(),
+                today_probs.max() * 100)
+    logger.info("  Posterior: %s", prob_str)
     logger.info("  Signal for downstream modules:")
     if today_regime_name == "Bull":
         logger.info("  → Use Momentum + Quality factors. Full Kelly sizing.")
@@ -674,6 +680,18 @@ def run_hmm_pipeline(force_n_states: int = None) -> pd.DataFrame:
     output = features_df.copy()
     output["regime_int"]  = regime_ints
     output["regime_name"] = [state_map[r] for r in regime_ints]
+
+    # ── Per-day state PROBABILITIES (filtered, uses only past data) ─────
+    # A single hard label ("BULL") is brittle and easy to call wrong. Saving the
+    # filtered posterior P(state_t | x_1..x_t) lets the dashboard show an honest
+    # "Bull 12% · Sideways 30% · Bear 58%" readout instead of one fragile word.
+    # Columns are named by REGIME, not by arbitrary HMM state integer, so
+    # consumers never have to re-derive the state→name mapping.
+    for state_idx in range(model.n_components):
+        col = "prob_" + state_map[state_idx].lower()   # prob_bull/prob_bear/prob_sideways
+        output[col] = filtered_probs[:, state_idx]
+    # Confidence of the label actually assigned each day (max posterior)
+    output["regime_confidence"] = filtered_probs.max(axis=1)
 
     # ── Save ───────────────────────────────────────────────────
     os.makedirs(DATA_DIR, exist_ok=True)

@@ -1,92 +1,92 @@
-stock_a,stock_b,r,trace_stat,trace_crit_95,maxeig_stat,maxeig_crit_95,beta_a,beta_b,alpha_a,alpha_b,halflife_days,spread_mean,spread_std,cointegrated
-TCS,BAJFINANCE,2,18.7794,15.4943,14.6132,14.2639,1.0,-0.2352,-0.01,0.0165,50.8,83.6271,11.6881,True
-HDFCBANK,INFY,1,18.3746,15.4943,15.0731,14.2639,1.0,-3.0604,-0.0105,0.001,49.8,-198.7497,32.9404,True
-RELIANCE,ITC,1,17.3906,15.4943,17.3502,14.2639,1.0,-0.4727,-0.0073,0.018,41.2,66.2281,14.3155,True
-INFY,TCS,0,16.1028,15.4943,11.7234,14.2639,,,,,,,,False
-TCS,MARUTI,0,16.0076,15.4943,12.0843,14.2639,,,,,,,,False
-RELIANCE,HINDUNILVR,1,15.5399,15.4943,14.5617,14.2639,1.0,-0.9459,-0.0123,-0.0019,67.4,16.6965,17.4181,True
-TCS,SUNPHARMA,0,15.3633,15.4943,11.7135,14.2639,,,,,,,,False
-ICICIBANK,TCS,0,15.0615,15.4943,11.5294,14.2639,,,,,,,,False
-ICICIBANK,MARUTI,0,14.9608,15.4943,12.344,14.2639,,,,,,,,False
-TCS,ONGC,0,14.7038,15.4943,14.1214,14.2639,,,,,,,,False
-TCS,DRREDDY,0,14.3984,15.4943,13.1172,14.2639,,,,,,,,False
-HINDUNILVR,MARUTI,0,13.8037,15.4943,11.4214,14.2639,,,,,,,,False
-TCS,WIPRO,0,13.3584,15.4943,9.3885,14.2639,,,,,,,,False
-ITC,ONGC,0,13.3054,15.4943,13.1112,14.2639,,,,,,,,False
-HDFCBANK,TCS,0,13.0161,15.4943,9.8824,14.2639,,,,,,,,False
-INFY,AXISBANK,0,12.9576,15.4943,12.0545,14.2639,,,,,,,,False
-BAJFINANCE,SUNPHARMA,0,12.3386,15.4943,9.1561,14.2639,,,,,,,,False
-INFY,MARUTI,0,12.0823,15.4943,8.6131,14.2639,,,,,,,,False
-DRREDDY,HINDUNILVR,0,12.0478,15.4943,10.3005,14.2639,,,,,,,,False
-AXISBANK,HINDUNILVR,0,11.8591,15.4943,11.2094,14.2639,,,,,,,,False
-AXISBANK,MARUTI,0,11.8391,15.4943,10.2175,14.2639,,,,,,,,False
-ICICIBANK,ONGC,0,11.6394,15.4943,11.4129,14.2639,,,,,,,,False
-ICICIBANK,HINDUNILVR,0,11.5603,15.4943,10.231,14.2639,,,,,,,,False
-AXISBANK,ONGC,0,11.4585,15.4943,11.456,14.2639,,,,,,,,False
-HDFCBANK,WIPRO,0,11.3845,15.4943,7.6742,14.2639,,,,,,,,False
-INFY,SUNPHARMA,0,11.3839,15.4943,8.1337,14.2639,,,,,,,,False
-TCS,AXISBANK,0,11.3052,15.4943,10.1859,14.2639,,,,,,,,False
-INFY,BAJFINANCE,0,11.2756,15.4943,7.8068,14.2639,,,,,,,,False
-RELIANCE,ONGC,0,11.2664,15.4943,11.2647,14.2639,,,,,,,,False
-TCS,HINDUNILVR,0,11.253,15.4943,9.7252,14.2639,,,,,,,,False
-ICICIBANK,WIPRO,0,11.2044,15.4943,8.2415,14.2639,,,,,,,,False
-ICICIBANK,INFY,0,10.82,15.4943,8.4338,14.2639,,,,,,,,False
-MARUTI,ONGC,0,10.75,15.4943,10.4967,14.2639,,,,,,,,False
-BAJFINANCE,WIPRO,0,10.7024,15.4943,7.6027,14.2639,,,,,,,,False
-HDFCBANK,ICICIBANK,0,10.6648,15.4943,8.5886,14.2639,,,,,,,,False
-INFY,HINDUNILVR,0,10.6617,15.4943,9.3946,14.2639,,,,,,,,False
-BAJFINANCE,MARUTI,0,10.3095,15.4943,6.6489,14.2639,,,,,,,,False
-HDFCBANK,MARUTI,0,10.281,15.4943,7.958,14.2639,,,,,,,,False
-RELIANCE,TCS,0,9.8904,15.4943,8.2775,14.2639,,,,,,,,False
-AXISBANK,SUNPHARMA,0,9.7135,15.4943,5.2464,14.2639,,,,,,,,False
-ICICIBANK,BAJFINANCE,0,9.5834,15.4943,7.3956,14.2639,,,,,,,,False
-ITC,MARUTI,0,9.5652,15.4943,8.9576,14.2639,,,,,,,,False
-HINDUNILVR,ONGC,0,9.5353,15.4943,9.535,14.2639,,,,,,,,False
-ICICIBANK,AXISBANK,0,9.4345,15.4943,8.4301,14.2639,,,,,,,,False
-TCS,ITC,0,9.2186,15.4943,9.0063,14.2639,,,,,,,,False
-RELIANCE,INFY,0,9.1383,15.4943,6.9684,14.2639,,,,,,,,False
-RELIANCE,MARUTI,0,9.0846,15.4943,6.9724,14.2639,,,,,,,,False
-HDFCBANK,SUNPHARMA,0,8.9742,15.4943,6.474,14.2639,,,,,,,,False
-INFY,DRREDDY,0,8.9415,15.4943,8.1729,14.2639,,,,,,,,False
-HDFCBANK,BAJFINANCE,0,8.791,15.4943,5.3153,14.2639,,,,,,,,False
-ICICIBANK,ITC,0,8.7841,15.4943,8.5244,14.2639,,,,,,,,False
-INFY,WIPRO,0,8.6519,15.4943,5.6639,14.2639,,,,,,,,False
-INFY,ONGC,0,8.4223,15.4943,8.4184,14.2639,,,,,,,,False
-HINDUNILVR,ITC,0,8.4069,15.4943,8.4052,14.2639,,,,,,,,False
-HDFCBANK,HINDUNILVR,0,8.3071,15.4943,7.5397,14.2639,,,,,,,,False
-HDFCBANK,AXISBANK,0,8.223,15.4943,7.4749,14.2639,,,,,,,,False
-HINDUNILVR,SUNPHARMA,0,7.8927,15.4943,4.445,14.2639,,,,,,,,False
-AXISBANK,BAJFINANCE,0,7.8867,15.4943,4.8035,14.2639,,,,,,,,False
-RELIANCE,DRREDDY,0,7.735,15.4943,6.6917,14.2639,,,,,,,,False
-RELIANCE,ICICIBANK,0,7.663,15.4943,6.602,14.2639,,,,,,,,False
-RELIANCE,HDFCBANK,0,7.4554,15.4943,6.0421,14.2639,,,,,,,,False
-DRREDDY,SUNPHARMA,0,7.3837,15.4943,5.6519,14.2639,,,,,,,,False
-SUNPHARMA,WIPRO,0,7.3461,15.4943,4.1823,14.2639,,,,,,,,False
-MARUTI,SUNPHARMA,0,7.2183,15.4943,4.1224,14.2639,,,,,,,,False
-INFY,ITC,0,7.1947,15.4943,6.9668,14.2639,,,,,,,,False
-HDFCBANK,ITC,0,7.1204,15.4943,6.9323,14.2639,,,,,,,,False
-DRREDDY,MARUTI,0,7.1084,15.4943,6.177,14.2639,,,,,,,,False
-MARUTI,WIPRO,0,7.0757,15.4943,3.8126,14.2639,,,,,,,,False
-AXISBANK,WIPRO,0,6.7168,15.4943,4.4722,14.2639,,,,,,,,False
-RELIANCE,AXISBANK,0,6.4403,15.4943,5.5855,14.2639,,,,,,,,False
-HDFCBANK,ONGC,0,6.4009,15.4943,6.3874,14.2639,,,,,,,,False
-BAJFINANCE,HINDUNILVR,0,6.2296,15.4943,4.0673,14.2639,,,,,,,,False
-ICICIBANK,SUNPHARMA,0,6.2291,15.4943,4.5123,14.2639,,,,,,,,False
-AXISBANK,ITC,0,6.1644,15.4943,6.085,14.2639,,,,,,,,False
-AXISBANK,DRREDDY,0,5.8703,15.4943,4.9186,14.2639,,,,,,,,False
-HINDUNILVR,WIPRO,0,5.791,15.4943,3.8131,14.2639,,,,,,,,False
-ICICIBANK,DRREDDY,0,5.501,15.4943,4.7212,14.2639,,,,,,,,False
-BAJFINANCE,DRREDDY,0,5.4052,15.4943,4.3691,14.2639,,,,,,,,False
-RELIANCE,BAJFINANCE,0,5.27,15.4943,3.5499,14.2639,,,,,,,,False
-RELIANCE,SUNPHARMA,0,5.2332,15.4943,3.8046,14.2639,,,,,,,,False
-HDFCBANK,DRREDDY,0,5.134,15.4943,4.3307,14.2639,,,,,,,,False
-ITC,SUNPHARMA,0,5.0214,15.4943,4.4459,14.2639,,,,,,,,False
-ONGC,SUNPHARMA,0,4.9671,15.4943,4.3199,14.2639,,,,,,,,False
-BAJFINANCE,ITC,0,4.8592,15.4943,4.3127,14.2639,,,,,,,,False
-RELIANCE,WIPRO,0,4.4816,15.4943,3.1106,14.2639,,,,,,,,False
-ITC,WIPRO,0,4.3414,15.4943,4.0567,14.2639,,,,,,,,False
-BAJFINANCE,ONGC,0,4.1875,15.4943,4.0231,14.2639,,,,,,,,False
-DRREDDY,WIPRO,0,3.9424,15.4943,3.1126,14.2639,,,,,,,,False
-DRREDDY,ONGC,0,3.7537,15.4943,2.2886,14.2639,,,,,,,,False
-ONGC,WIPRO,0,3.1375,15.4943,3.1333,14.2639,,,,,,,,False
-DRREDDY,ITC,0,2.5977,15.4943,1.4305,14.2639,,,,,,,,False
+stock_a,stock_b,sector_a,sector_b,same_sector,mechanism,r,trace_stat,trace_crit_95,maxeig_stat,maxeig_crit_95,beta_a,beta_b,alpha_a,alpha_b,halflife_days,spread_mean,spread_std,raw_cointegrated,raw_trace_stat,resid_cointegrated,resid_trace_stat,cointegrated
+INFY,ONGC,IT,Energy,False,cross-sector — no economic anchor,2,36.836,15.4943,25.7263,14.2639,1.0,1.0345,-0.0086,-0.0209,32.1,204.3603,8.1624,False,8.4223,True,36.836,False
+ICICIBANK,TCS,Financials,IT,False,cross-sector — no economic anchor,2,33.3343,15.4943,25.5443,14.2639,1.0,-3.9826,-0.0093,-0.001,41.1,-302.4408,27.9702,False,15.0615,True,33.3343,False
+TCS,ONGC,IT,Energy,False,cross-sector — no economic anchor,2,32.5413,15.4943,17.8098,14.2639,1.0,1190.7811,-0.0114,0.0079,43.4,121508.9361,9378.07,False,14.7038,True,32.5413,False
+HDFCBANK,WIPRO,Financials,IT,False,cross-sector — no economic anchor,2,28.7503,15.4943,23.9317,14.2639,1.0,-0.3446,-0.0118,-0.0105,79.8,73.5037,12.027,False,11.3845,True,28.7503,False
+AXISBANK,WIPRO,Financials,IT,False,cross-sector — no economic anchor,2,26.1404,15.4943,21.8977,14.2639,1.0,0.184,-0.0068,-0.0253,58.9,121.6728,6.9752,False,6.7168,True,26.1404,False
+TCS,ITC,IT,FMCG,False,cross-sector — no economic anchor,2,25.5383,15.4943,18.9691,14.2639,1.0,0.5077,-0.0135,-0.0124,36.0,148.4376,7.8032,False,9.2186,True,25.5383,False
+HINDUNILVR,ONGC,FMCG,Energy,False,cross-sector — no economic anchor,2,24.0063,15.4943,16.8523,14.2639,1.0,2.0886,-0.0082,-0.0053,38.6,303.6948,16.4565,False,9.5353,True,24.0063,False
+INFY,HINDUNILVR,IT,FMCG,False,cross-sector — no economic anchor,2,23.0688,15.4943,17.1284,14.2639,1.0,-0.5386,-0.0139,0.0109,34.3,50.0079,5.4563,False,10.6617,True,23.0688,False
+ONGC,SUNPHARMA,Energy,Pharma,False,cross-sector — no economic anchor,2,22.3303,15.4943,18.2935,14.2639,1.0,-0.2842,-0.0197,0.0031,31.1,63.2503,7.1611,False,4.9671,True,22.3303,False
+ICICIBANK,ITC,Financials,FMCG,False,cross-sector — no economic anchor,1,22.1111,15.4943,19.0008,14.2639,1.0,1.7263,-0.0055,-0.009,32.0,264.0455,14.1139,False,8.7841,True,22.1111,False
+ICICIBANK,WIPRO,Financials,IT,False,cross-sector — no economic anchor,2,21.6887,15.4943,15.706,14.2639,1.0,-0.2962,-0.003,0.0087,138.7,83.1075,16.6966,False,11.2044,True,21.6887,False
+AXISBANK,ONGC,Financials,Energy,False,cross-sector — no economic anchor,2,20.8793,15.4943,14.4782,14.2639,1.0,-3.1648,-0.0081,0.0005,41.2,-223.82,24.5435,False,11.4585,True,20.8793,False
+ITC,ONGC,FMCG,Energy,False,cross-sector — no economic anchor,0,20.4119,15.4943,14.2636,14.2639,,,,,,,,False,13.3054,False,20.4119,False
+INFY,TCS,IT,IT,True,shared USD/INR & global tech-spend exposure,0,20.3129,15.4943,11.3005,14.2639,,,,,,,,False,16.1028,False,20.3129,False
+RELIANCE,ITC,Energy,FMCG,False,cross-sector — no economic anchor,1,20.1789,15.4943,17.0268,14.2639,1.0,-1.1767,-0.0029,0.0138,33.7,-8.6189,9.1118,True,17.3906,True,20.1789,False
+AXISBANK,BAJFINANCE,Financials,Financials,True,"shared rate cycle, credit growth & deposit dynamics",0,20.0609,15.4943,13.0552,14.2639,,,,,,,,False,7.8867,False,20.0609,False
+HDFCBANK,TCS,Financials,IT,False,cross-sector — no economic anchor,0,19.5328,15.4943,13.3363,14.2639,,,,,,,,False,13.0161,False,19.5328,False
+ITC,MARUTI,FMCG,Auto,False,cross-sector — no economic anchor,1,19.1484,15.4943,15.7328,14.2639,1.0,0.313,-0.0139,0.0068,56.5,122.9637,9.108,False,9.5652,True,19.1484,False
+BAJFINANCE,ONGC,Financials,Energy,False,cross-sector — no economic anchor,1,19.0923,15.4943,15.3325,14.2639,1.0,-5.7882,-0.0,0.003,36.7,-462.5152,42.356,False,4.1875,True,19.0923,False
+TCS,HINDUNILVR,IT,FMCG,False,cross-sector — no economic anchor,0,18.8778,15.4943,11.7961,14.2639,,,,,,,,False,11.253,False,18.8778,False
+AXISBANK,HINDUNILVR,Financials,FMCG,False,cross-sector — no economic anchor,0,18.8142,15.4943,10.8387,14.2639,,,,,,,,False,11.8591,False,18.8142,False
+TCS,BAJFINANCE,IT,Financials,False,cross-sector — no economic anchor,0,18.566,15.4943,14.0334,14.2639,,,,,,,,True,18.7794,False,18.566,False
+TCS,AXISBANK,IT,Financials,False,cross-sector — no economic anchor,0,18.5072,15.4943,11.9424,14.2639,,,,,,,,False,11.3052,False,18.5072,False
+TCS,MARUTI,IT,Auto,False,cross-sector — no economic anchor,1,18.4208,15.4943,16.2227,14.2639,1.0,-0.1978,-0.0165,0.0072,37.1,81.1121,6.9961,False,16.0076,True,18.4208,False
+AXISBANK,MARUTI,Financials,Auto,False,cross-sector — no economic anchor,1,18.251,15.4943,16.119,14.2639,1.0,0.2696,-0.0172,-0.0016,36.4,132.8128,5.6033,False,11.8391,True,18.251,False
+HDFCBANK,ONGC,Financials,Energy,False,cross-sector — no economic anchor,0,18.2388,15.4943,13.2084,14.2639,,,,,,,,False,6.4009,False,18.2388,False
+ICICIBANK,ONGC,Financials,Energy,False,cross-sector — no economic anchor,0,17.6508,15.4943,13.5413,14.2639,,,,,,,,False,11.6394,False,17.6508,False
+TCS,SUNPHARMA,IT,Pharma,False,cross-sector — no economic anchor,0,17.6257,15.4943,13.1326,14.2639,,,,,,,,False,15.3633,False,17.6257,False
+INFY,SUNPHARMA,IT,Pharma,False,cross-sector — no economic anchor,0,17.6204,15.4943,13.3658,14.2639,,,,,,,,False,11.3839,False,17.6204,False
+ICICIBANK,BAJFINANCE,Financials,Financials,True,"shared rate cycle, credit growth & deposit dynamics",0,17.247,15.4943,10.8494,14.2639,,,,,,,,False,9.5834,False,17.247,False
+RELIANCE,TCS,Energy,IT,False,cross-sector — no economic anchor,0,17.2415,15.4943,13.8109,14.2639,,,,,,,,False,9.8904,False,17.2415,False
+MARUTI,SUNPHARMA,Auto,Pharma,False,cross-sector — no economic anchor,0,17.2229,15.4943,13.3999,14.2639,,,,,,,,False,7.2183,False,17.2229,False
+BAJFINANCE,HINDUNILVR,Financials,FMCG,False,cross-sector — no economic anchor,0,17.1822,15.4943,13.8008,14.2639,,,,,,,,False,6.2296,False,17.1822,False
+HDFCBANK,HINDUNILVR,Financials,FMCG,False,cross-sector — no economic anchor,0,17.119,15.4943,12.531,14.2639,,,,,,,,False,8.3071,False,17.119,False
+ICICIBANK,MARUTI,Financials,Auto,False,cross-sector — no economic anchor,0,16.9775,15.4943,14.0122,14.2639,,,,,,,,False,14.9608,False,16.9775,False
+ICICIBANK,SUNPHARMA,Financials,Pharma,False,cross-sector — no economic anchor,0,16.9019,15.4943,12.9578,14.2639,,,,,,,,False,6.2291,False,16.9019,False
+RELIANCE,ONGC,Energy,Energy,True,shared crude-oil & energy-policy exposure,0,16.8696,15.4943,13.2671,14.2639,,,,,,,,False,11.2664,False,16.8696,False
+HINDUNILVR,SUNPHARMA,FMCG,Pharma,False,cross-sector — no economic anchor,0,16.8361,15.4943,12.8523,14.2639,,,,,,,,False,7.8927,False,16.8361,False
+INFY,AXISBANK,IT,Financials,False,cross-sector — no economic anchor,0,16.788,15.4943,11.2917,14.2639,,,,,,,,False,12.9576,False,16.788,False
+BAJFINANCE,MARUTI,Financials,Auto,False,cross-sector — no economic anchor,0,16.4647,15.4943,12.0134,14.2639,,,,,,,,False,10.3095,False,16.4647,False
+INFY,BAJFINANCE,IT,Financials,False,cross-sector — no economic anchor,0,16.4515,15.4943,12.6644,14.2639,,,,,,,,False,11.2756,False,16.4515,False
+DRREDDY,ONGC,Pharma,Energy,False,cross-sector — no economic anchor,1,16.3883,15.4943,15.1592,14.2639,1.0,-10.4804,-0.0006,0.0015,39.6,-962.9673,79.4822,False,3.7537,True,16.3883,False
+BAJFINANCE,ITC,Financials,FMCG,False,cross-sector — no economic anchor,0,16.016,15.4943,12.2009,14.2639,,,,,,,,False,4.8592,False,16.016,False
+HDFCBANK,BAJFINANCE,Financials,Financials,True,"shared rate cycle, credit growth & deposit dynamics",0,15.9488,15.4943,12.001,14.2639,,,,,,,,False,8.791,False,15.9488,False
+HDFCBANK,INFY,Financials,IT,False,cross-sector — no economic anchor,0,15.8684,15.4943,11.2188,14.2639,,,,,,,,True,18.3746,False,15.8684,False
+AXISBANK,DRREDDY,Financials,Pharma,False,cross-sector — no economic anchor,1,15.855,15.4943,14.7543,14.2639,1.0,-0.2577,-0.0146,0.0084,38.8,71.6394,5.7002,False,5.8703,True,15.855,False
+INFY,ITC,IT,FMCG,False,cross-sector — no economic anchor,0,15.8249,15.4943,9.8542,14.2639,,,,,,,,False,7.1947,False,15.8249,False
+ITC,SUNPHARMA,FMCG,Pharma,False,cross-sector — no economic anchor,0,15.7211,15.4943,11.7853,14.2639,,,,,,,,False,5.0214,False,15.7211,False
+BAJFINANCE,SUNPHARMA,Financials,Pharma,False,cross-sector — no economic anchor,0,15.7125,15.4943,12.382,14.2639,,,,,,,,False,12.3386,False,15.7125,False
+RELIANCE,INFY,Energy,IT,False,cross-sector — no economic anchor,0,15.4171,15.4943,12.108,14.2639,,,,,,,,False,9.1383,False,15.4171,False
+ICICIBANK,INFY,Financials,IT,False,cross-sector — no economic anchor,0,15.3984,15.4943,11.1564,14.2639,,,,,,,,False,10.82,False,15.3984,False
+ICICIBANK,AXISBANK,Financials,Financials,True,"shared rate cycle, credit growth & deposit dynamics",0,15.324,15.4943,11.2338,14.2639,,,,,,,,False,9.4345,False,15.324,False
+MARUTI,ONGC,Auto,Energy,False,cross-sector — no economic anchor,0,15.3106,15.4943,13.1192,14.2639,,,,,,,,False,10.75,False,15.3106,False
+ONGC,WIPRO,Energy,IT,False,cross-sector — no economic anchor,0,15.1227,15.4943,13.239,14.2639,,,,,,,,False,3.1375,False,15.1227,False
+TCS,WIPRO,IT,IT,True,shared USD/INR & global tech-spend exposure,0,15.1091,15.4943,12.882,14.2639,,,,,,,,False,13.3584,False,15.1091,False
+RELIANCE,BAJFINANCE,Energy,Financials,False,cross-sector — no economic anchor,0,14.8617,15.4943,11.5183,14.2639,,,,,,,,False,5.27,False,14.8617,False
+RELIANCE,AXISBANK,Energy,Financials,False,cross-sector — no economic anchor,0,14.445,15.4943,11.0262,14.2639,,,,,,,,False,6.4403,False,14.445,False
+AXISBANK,SUNPHARMA,Financials,Pharma,False,cross-sector — no economic anchor,0,14.3356,15.4943,8.6804,14.2639,,,,,,,,False,9.7135,False,14.3356,False
+AXISBANK,ITC,Financials,FMCG,False,cross-sector — no economic anchor,0,14.3098,15.4943,8.9321,14.2639,,,,,,,,False,6.1644,False,14.3098,False
+HINDUNILVR,ITC,FMCG,FMCG,True,shared rural demand & input-cost cycle,0,14.1774,15.4943,8.7741,14.2639,,,,,,,,False,8.4069,False,14.1774,False
+INFY,WIPRO,IT,IT,True,shared USD/INR & global tech-spend exposure,0,13.78,15.4943,11.8856,14.2639,,,,,,,,False,8.6519,False,13.78,False
+ITC,WIPRO,FMCG,IT,False,cross-sector — no economic anchor,0,13.6622,15.4943,10.8581,14.2639,,,,,,,,False,4.3414,False,13.6622,False
+RELIANCE,MARUTI,Energy,Auto,False,cross-sector — no economic anchor,0,13.6239,15.4943,11.8214,14.2639,,,,,,,,False,9.0846,False,13.6239,False
+HINDUNILVR,WIPRO,FMCG,IT,False,cross-sector — no economic anchor,0,13.4548,15.4943,11.5459,14.2639,,,,,,,,False,5.791,False,13.4548,False
+DRREDDY,HINDUNILVR,Pharma,FMCG,False,cross-sector — no economic anchor,0,13.4533,15.4943,11.8972,14.2639,,,,,,,,False,12.0478,False,13.4533,False
+HDFCBANK,SUNPHARMA,Financials,Pharma,False,cross-sector — no economic anchor,0,13.2539,15.4943,8.788,14.2639,,,,,,,,False,8.9742,False,13.2539,False
+TCS,DRREDDY,IT,Pharma,False,cross-sector — no economic anchor,0,12.9502,15.4943,11.7546,14.2639,,,,,,,,False,14.3984,False,12.9502,False
+INFY,MARUTI,IT,Auto,False,cross-sector — no economic anchor,0,12.8162,15.4943,10.4784,14.2639,,,,,,,,False,12.0823,False,12.8162,False
+INFY,DRREDDY,IT,Pharma,False,cross-sector — no economic anchor,0,12.6095,15.4943,11.3576,14.2639,,,,,,,,False,8.9415,False,12.6095,False
+RELIANCE,HINDUNILVR,Energy,FMCG,False,cross-sector — no economic anchor,0,12.5136,15.4943,8.8186,14.2639,,,,,,,,True,15.5399,False,12.5136,False
+ICICIBANK,HINDUNILVR,Financials,FMCG,False,cross-sector — no economic anchor,0,12.4541,15.4943,8.2495,14.2639,,,,,,,,False,11.5603,False,12.4541,False
+BAJFINANCE,WIPRO,Financials,IT,False,cross-sector — no economic anchor,0,12.4437,15.4943,10.6109,14.2639,,,,,,,,False,10.7024,False,12.4437,False
+HDFCBANK,ITC,Financials,FMCG,False,cross-sector — no economic anchor,0,12.3629,15.4943,7.9203,14.2639,,,,,,,,False,7.1204,False,12.3629,False
+HDFCBANK,AXISBANK,Financials,Financials,True,"shared rate cycle, credit growth & deposit dynamics",0,11.9251,15.4943,6.5828,14.2639,,,,,,,,False,8.223,False,11.9251,False
+RELIANCE,ICICIBANK,Energy,Financials,False,cross-sector — no economic anchor,0,11.8971,15.4943,8.829,14.2639,,,,,,,,False,7.663,False,11.8971,False
+RELIANCE,SUNPHARMA,Energy,Pharma,False,cross-sector — no economic anchor,0,11.7257,15.4943,9.0562,14.2639,,,,,,,,False,5.2332,False,11.7257,False
+RELIANCE,WIPRO,Energy,IT,False,cross-sector — no economic anchor,0,11.5035,15.4943,9.7855,14.2639,,,,,,,,False,4.4816,False,11.5035,False
+HDFCBANK,DRREDDY,Financials,Pharma,False,cross-sector — no economic anchor,0,10.6419,15.4943,8.7643,14.2639,,,,,,,,False,5.134,False,10.6419,False
+HDFCBANK,ICICIBANK,Financials,Financials,True,"shared rate cycle, credit growth & deposit dynamics",0,10.3219,15.4943,7.1654,14.2639,,,,,,,,False,10.6648,False,10.3219,False
+HINDUNILVR,MARUTI,FMCG,Auto,False,cross-sector — no economic anchor,0,10.085,15.4943,7.9237,14.2639,,,,,,,,False,13.8037,False,10.085,False
+MARUTI,WIPRO,Auto,IT,False,cross-sector — no economic anchor,0,9.9347,15.4943,7.4171,14.2639,,,,,,,,False,7.0757,False,9.9347,False
+RELIANCE,HDFCBANK,Energy,Financials,False,cross-sector — no economic anchor,0,9.899,15.4943,6.0215,14.2639,,,,,,,,False,7.4554,False,9.899,False
+DRREDDY,SUNPHARMA,Pharma,Pharma,True,shared US-generics pricing & USD exposure,0,9.1494,15.4943,7.207,14.2639,,,,,,,,False,7.3837,False,9.1494,False
+SUNPHARMA,WIPRO,Pharma,IT,False,cross-sector — no economic anchor,0,8.5635,15.4943,6.6851,14.2639,,,,,,,,False,7.3461,False,8.5635,False
+RELIANCE,DRREDDY,Energy,Pharma,False,cross-sector — no economic anchor,0,7.8582,15.4943,6.7963,14.2639,,,,,,,,False,7.735,False,7.8582,False
+HDFCBANK,MARUTI,Financials,Auto,False,cross-sector — no economic anchor,0,7.8169,15.4943,5.6686,14.2639,,,,,,,,False,10.281,False,7.8169,False
+DRREDDY,ITC,Pharma,FMCG,False,cross-sector — no economic anchor,0,7.7566,15.4943,6.6047,14.2639,,,,,,,,False,2.5977,False,7.7566,False
+BAJFINANCE,DRREDDY,Financials,Pharma,False,cross-sector — no economic anchor,0,7.6761,15.4943,6.1269,14.2639,,,,,,,,False,5.4052,False,7.6761,False
+ICICIBANK,DRREDDY,Financials,Pharma,False,cross-sector — no economic anchor,0,6.3028,15.4943,5.1889,14.2639,,,,,,,,False,5.501,False,6.3028,False
+DRREDDY,MARUTI,Pharma,Auto,False,cross-sector — no economic anchor,0,5.9402,15.4943,4.7413,14.2639,,,,,,,,False,7.1084,False,5.9402,False
+DRREDDY,WIPRO,Pharma,IT,False,cross-sector — no economic anchor,0,5.8128,15.4943,4.5088,14.2639,,,,,,,,False,3.9424,False,5.8128,False

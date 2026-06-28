@@ -113,6 +113,34 @@ fi
 
 echo "[$(date '+%H:%M:%S')] alpaca_gate.py done" >> "$LOGFILE"
 
+# ── Step 3: Sync updated CSVs → GitHub (dashboard lives on raw.githubusercontent) ──
+# Copy vajra_returns.csv from indian-risk-engine (written by GARCH step)
+# then commit + push ALL changed data/ files so the dashboard sees live numbers.
+echo "[$(date '+%H:%M:%S')] START data sync → GitHub" >> "$LOGFILE"
+
+VAJRA_SRC="$VAJRA_DIR/data/vajra_returns.csv"
+VAJRA_DST="$PROJECT_DIR/data/vajra_returns.csv"
+
+if [ -f "$VAJRA_SRC" ]; then
+    cp "$VAJRA_SRC" "$VAJRA_DST"
+    echo "[$(date '+%H:%M:%S')] Copied vajra_returns.csv ($(wc -l < "$VAJRA_DST") rows)" >> "$LOGFILE"
+else
+    echo "[$(date '+%H:%M:%S')] WARN: vajra_returns.csv not found at $VAJRA_SRC — skipping copy" >> "$LOGFILE"
+fi
+
+# Git push from alpha-core repo
+cd "$PROJECT_DIR"
+GIT_CHANGED=$(git status --porcelain data/ 2>/dev/null | wc -l | tr -d ' ')
+if [ "$GIT_CHANGED" -gt 0 ]; then
+    git add data/ >> "$LOGFILE" 2>&1
+    git commit -m "data: daily pipeline update ${TODAY}" >> "$LOGFILE" 2>&1
+    git push origin main >> "$LOGFILE" 2>&1 && \
+        echo "[$(date '+%H:%M:%S')] Git push OK (${GIT_CHANGED} file(s) updated)" >> "$LOGFILE" || \
+        echo "[$(date '+%H:%M:%S')] WARN: Git push FAILED — dashboard will remain stale" >> "$LOGFILE"
+else
+    echo "[$(date '+%H:%M:%S')] No data changes to commit" >> "$LOGFILE"
+fi
+
 # ── Done ──────────────────────────────────────────────────────
 echo "[$(date '+%H:%M:%S')] Pipeline complete" >> "$LOGFILE"
 echo "══════════════════════════════════════════════════" >> "$LOGFILE"
