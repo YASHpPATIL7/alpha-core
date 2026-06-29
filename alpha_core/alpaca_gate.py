@@ -176,6 +176,57 @@ def fetch_account_summary(api) -> dict:
     }
 
 
+def append_nav_journal(summary: dict, data_dir=None) -> None:
+    """
+    Append today's account state to data/alpaca_nav_history.csv so the NSE→ETF
+    account builds a NAV + activity time-series (the dashboard reads this for
+    account 2). Without this the account only ever has a 'current snapshot' and
+    no history. Idempotent per day: re-running the same day overwrites that row.
+
+    Columns: Date, Portfolio_Value, Equity, Cash, Total_PnL, PnL_Pct,
+             N_Positions, Status
+    """
+    if not summary:
+        logger.info("  No account summary (dry-run) — skipping NAV journal.")
+        return
+    import csv as _csv
+    from datetime import date as _date
+    from pathlib import Path as _Path
+
+    ddir = _Path(data_dir) if data_dir else (_Path(__file__).parent.parent / "data")
+    ddir.mkdir(parents=True, exist_ok=True)
+    path = ddir / "alpaca_nav_history.csv"
+
+    pos = summary.get("positions", [])
+    status = "FLAT" if not pos else ", ".join(
+        f"{p['symbol']} x{p['qty']}" for p in pos[:4]) + ("…" if len(pos) > 4 else "")
+    row = {
+        "Date":            str(_date.today()),
+        "Portfolio_Value": round(summary.get("portfolio_value", 0.0), 2),
+        "Equity":          round(summary.get("equity", 0.0), 2),
+        "Cash":            round(summary.get("cash", 0.0), 2),
+        "Total_PnL":       round(summary.get("total_pnl_usd", 0.0), 2),
+        "PnL_Pct":         round(summary.get("total_pnl_pct", 0.0), 4),
+        "N_Positions":     summary.get("n_positions", 0),
+        "Status":          status,
+    }
+    cols = list(row.keys())
+
+    # Read existing, drop any row for today, append the fresh one (dedupe per day)
+    existing = []
+    if path.exists():
+        with path.open(newline="") as f:
+            existing = [r for r in _csv.DictReader(f) if r.get("Date") != row["Date"]]
+    with path.open("w", newline="") as f:
+        w = _csv.DictWriter(f, fieldnames=cols)
+        w.writeheader()
+        for r in existing:
+            w.writerow({k: r.get(k, "") for k in cols})
+        w.writerow(row)
+    logger.info("  NAV journal updated: %s (%d sessions)  NAV=$%.2f  %s",
+                path.name, len(existing) + 1, row["Portfolio_Value"], status)
+
+
 def fetch_current_positions(api) -> dict:
     """
     Returns {etf_symbol: qty_held} for all open positions.
@@ -447,6 +498,7 @@ def run_alpaca_pipeline():
     logger.info("Mode: %s", mode)
 
     account_summary   = fetch_account_summary(api)
+    append_nav_journal(account_summary)          # build NAV + activity history for the dashboard
     portfolio_value   = account_summary.get("portfolio_value", 100_000)
     pos_details       = account_summary.get("positions", [])
     current_positions = fetch_current_positions(api)
