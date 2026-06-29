@@ -172,7 +172,18 @@ def load_features() -> pd.DataFrame:
     features["momentum_sharpe"] = roll_mean / (roll_std + 1e-9)
     # Positive = persistently rising market (bull), negative = falling (bear), ~0 = sideways
 
-    # Drop NaN rows (first 20 days have no rolling stats; VIX might have early NaN)
+    # Feature 4: 63-day (≈3-month) trend — SUSTAINED direction.
+    # FIX 2026-06-28: the 20-day Sharpe is too short to separate a slow grind-down
+    # bear (e.g. H1-2022 rate-hike selloff) from a steady bull — over any 20-day
+    # window both look mildly positive, so the HMM put H1-2022 INTO the bull state
+    # (90% of days) and the Oct-2023 election rally into the flat state. A
+    # quarter-scale average daily drift is negative through sustained declines and
+    # positive through sustained rallies, giving the HMM the persistence signal it
+    # needs to actually separate those regimes (a labelling change alone could not).
+    features["trend_63d"] = mkt.rolling(63).mean()
+    # >0 = market has drifted up over the quarter (bull), <0 = sustained decline (bear)
+
+    # Drop NaN rows (first 63 days have no rolling stats; VIX might have early NaN)
     features = features.dropna()
 
     logger.info("  Feature matrix: %d days × %d features", *features.shape)
@@ -381,7 +392,10 @@ def label_states(model: GaussianHMM, feature_cols: list,
             s = x.std()
             return (x - x.mean()) / s if s > 1e-12 else np.zeros_like(x)
 
-        bull_score = _z(ret_means) + _z(mom_means) - _z(vix_means)
+        # Include the 63-day trend (feature 3) when present — it is the strongest
+        # bull/bear discriminator now that the HMM can see sustained direction.
+        trend_means = means_orig[:, 3] if means_orig.shape[1] > 3 else np.zeros(n)
+        bull_score = (_z(ret_means) + _z(mom_means) + _z(trend_means)) - _z(vix_means)
         order = np.argsort(bull_score)          # ascending: most bearish → most bullish
         bear_state = int(order[0])
         side_state = int(order[1])
